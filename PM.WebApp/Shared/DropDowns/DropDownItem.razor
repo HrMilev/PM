@@ -1,0 +1,6 @@
+﻿@typeparam T
+<a class="dropdown-item" 
+   Item="@Item" 
+   @onclick="e=> DropDown.HandleSelect(Item, ChildContent)">
+    @ChildContent(Item)
+</a>

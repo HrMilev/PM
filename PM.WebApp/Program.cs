@@ -12,6 +12,9 @@ using Grpc.Net.Client;
 using GrpcGreeter;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Globalization;
+using PM.WebApp.Constants;
 
 namespace PM.WebApp
 {
@@ -20,7 +23,7 @@ namespace PM.WebApp
         public static async Task Main( string[] args )
         {
             var builder = WebAssemblyHostBuilder.CreateDefault( args );
-            builder.RootComponents.Add<App>( "app" );
+            builder.RootComponents.Add<App>("app");
 
             builder.Services.AddHttpClient( "PM.WebAPI", client => client.BaseAddress = new Uri( builder.HostEnvironment.BaseAddress ) )
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
@@ -39,7 +42,22 @@ namespace PM.WebApp
             } );
             builder.Services.AddApiAuthorization();
 
-            await builder.Build().RunAsync();
+            builder.Services.AddLocalization( opts => { opts.ResourcesPath = "Resources"; } );
+            var host = builder.Build();
+            await SetCulture( host );
+            await host.RunAsync();
+        }
+
+        public static async Task SetCulture(WebAssemblyHost host)
+        {
+            var js = host.Services.GetRequiredService<IJSRuntime>();
+            var result = await js.InvokeAsync<string>( JSFunctions.GetBlazorCulture );
+            if (result != null)
+            {
+                var culture = new CultureInfo( result );
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+            }
         }
     }
 }

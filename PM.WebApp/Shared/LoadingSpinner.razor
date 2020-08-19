@@ -1,0 +1,22 @@
+﻿@if (isLoaded)
+{
+    @ChildContent
+}
+else
+{
+<div class="loading-page-spinner spinner-grow text-danger" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+}
+
+@code {
+    bool isLoaded;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        isLoaded = true;
+    }
+}

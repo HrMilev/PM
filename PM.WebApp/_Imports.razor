@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using System.Globalization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -8,3 +9,13 @@
 @using Microsoft.JSInterop
 @using PM.WebApp
 @using PM.WebApp.Shared
+@using PM.WebApp.Constants
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.Localization
+@using PM.WebApp.Shared.DropDowns
+@using PM.WebApp.Shared.Buttons
+@using PM.WebApp.StaticData
+@using Microsoft.AspNetCore.Authorization
+@using PM.Core
+
+@attribute [Authorize]

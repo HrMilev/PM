@@ -1,0 +1,11 @@
+﻿<DropDown OnSelected="@((CultureInfo culture) => SetCulture(culture))"
+          Items=@AvailableCultures>
+    <InitialTip>
+        @CurrentCultureISO
+    </InitialTip>
+    <ItemTemplate Context="culture">
+        <DropDownItem Item="@culture">
+            @context.TwoLetterISOLanguageName.ToUpperInvariant()
+        </DropDownItem>
+    </ItemTemplate>
+</DropDown>

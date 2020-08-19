@@ -181,3 +181,11 @@ app {
         display: block;
     }
 }
+
+.loading-page-spinner {
+    position: fixed;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+}
+

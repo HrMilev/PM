@@ -1,26 +1,24 @@
-<LoadingSpinner>
-    <CascadingAuthenticationState>
-        <Router AppAssembly="@typeof(Program).Assembly">
-            <Found Context="routeData">
-                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-                    <Authorizing>
-                        <LoadingSpinner />
-                    </Authorizing>
-                    <NotAuthorized>
-                        @if (!context.User.Identity.IsAuthenticated)
-                        {
-                            <RedirectToLogin />
-                        }
-                        else
-                        {
-                            <p>You are not authorized to access this resource.</p>
-                        }
-                    </NotAuthorized>
-                </AuthorizeRouteView>
-            </Found>
-            <NotFound>
-                <NotFoundContent />
-            </NotFound>
-        </Router>
-    </CascadingAuthenticationState>
-</LoadingSpinner>
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    <LoadingSpinner />
+                </Authorizing>
+                <NotAuthorized>
+                    @if (!context.User.Identity.IsAuthenticated)
+                    {
+                        <RedirectToLogin />
+                    }
+                    else
+                    {
+                        <p>You are not authorized to access this resource.</p>
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <NotFoundContent />
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

@@ -40,7 +40,9 @@ namespace PM.WebApp
                 // Now we can instantiate gRPC clients for this channel
                 return new Greeter.GreeterClient( channel );
             } );
-            builder.Services.AddApiAuthorization();
+            builder.Services.AddApiAuthorization(o => {
+                o.AuthenticationPaths.LogOutSucceededPath = "/";
+            });
 
             builder.Services.AddLocalization( opts => { opts.ResourcesPath = "Resources"; } );
             var host = builder.Build();

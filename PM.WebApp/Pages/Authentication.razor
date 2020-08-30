@@ -1,7 +1,14 @@
 @page "/authentication/{action}"
 @attribute [AllowAnonymous]
 @layout EmptyLayout
-<RemoteAuthenticatorView Action="@Action" />
+<RemoteAuthenticatorView Action="@Action">
+    <LoggingIn>
+        <LoadingSpinner/>
+    </LoggingIn>
+    <LogOut>
+        <LoadingSpinner/>
+    </LogOut>
+</RemoteAuthenticatorView>
 
 @code{
     [Parameter] public string Action { get; set; }

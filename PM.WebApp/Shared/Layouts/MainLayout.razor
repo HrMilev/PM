@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+
+        <div class="main">
+            <div class="top-row px-4 auth">
+                <LoginDisplay />
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                <div class="ml-4">
+                    <CultureSelector />
+                </div>
+            </div>
+
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="main">
+            <div class="content">
+                @Body
+            </div>
+        </div>
+    </NotAuthorized>
+    <Authorizing>
+        <div class="main">
+            <div class="content">
+                @Body
+            </div>
+        </div>
+    </Authorizing>
+</AuthorizeView>
+

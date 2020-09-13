@@ -18,18 +18,18 @@ namespace PM.WebAPI
 {
     public class Startup
     {
-        public Startup( IConfiguration configuration )
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices( IServiceCollection services )
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>( options =>
-                 options.UseSqlServer(
-                     Configuration.GetConnectionString( "DefaultConnection" ) ) );
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -46,7 +46,7 @@ namespace PM.WebAPI
             services.AddGrpc();
         }
 
-        public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -56,7 +56,7 @@ namespace PM.WebAPI
             }
             else
             {
-                app.UseExceptionHandler( "/Error" );
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -71,13 +71,13 @@ namespace PM.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseGrpcWeb();
-            app.UseEndpoints( endpoints =>
-             {
-                 endpoints.MapRazorPages();
-                 endpoints.MapControllers();
-                 endpoints.MapGrpcService<GreeterService>().EnableGrpcWeb();
-                 endpoints.MapFallbackToFile( "index.html" );
-             } );
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
+                endpoints.MapGrpcService<GreeterService>().EnableGrpcWeb();
+                endpoints.MapFallbackToFile("index.html");
+            });
         }
     }
 }

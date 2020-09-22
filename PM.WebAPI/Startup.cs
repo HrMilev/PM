@@ -34,7 +34,10 @@ namespace PM.WebAPI
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(o =>
+            {
+                o.UserInteraction.LoginUrl = "/Login";
+            })
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
@@ -44,6 +47,11 @@ namespace PM.WebAPI
             services.AddRazorPages();
 
             services.AddGrpc();
+
+            services.AddLocalization(opts =>
+            {
+                opts.ResourcesPath = "Resources";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

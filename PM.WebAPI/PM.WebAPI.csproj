@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PM.Core\PM.Core.csproj" />
+    <ProjectReference Include="..\PM.Localizations\PM.Localizations.csproj" />
     <ProjectReference Include="..\PM.WebApp\PM.WebApp.csproj" />
   </ItemGroup>
 

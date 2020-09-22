@@ -48,8 +48,7 @@ namespace PM.WebApp
             builder.Services.AddLocalization(opts =>
             {
                 opts.ResourcesPath = "Resources";
-            }
-            );
+            });
             var host = builder.Build();
             await SetCulture(host);
             await host.RunAsync();

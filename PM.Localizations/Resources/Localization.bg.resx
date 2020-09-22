@@ -123,4 +123,10 @@
   <data name="Hello" xml:space="preserve">
     <value>Здравей</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Register as a new user" xml:space="preserve">
+    <value>Регистрация като нов потребител</value>
+  </data>
 </root>

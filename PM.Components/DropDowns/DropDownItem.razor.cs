@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace PM.WebApp.Shared.DropDowns
+namespace PM.Components.DropDowns
 {
     public partial class DropDownItem<T>
     {

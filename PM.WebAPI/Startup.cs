@@ -13,9 +13,37 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using PM.WebAPI.Data;
 using PM.WebAPI.Models;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Globalization;
 
 namespace PM.WebAPI
 {
+    public class RequestCultureMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        public RequestCultureMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            var cultureQuery = context.Request.Cookies["BlazorCulture"];
+            if (!string.IsNullOrWhiteSpace(cultureQuery))
+            {
+                var culture = new CultureInfo(cultureQuery);
+
+                CultureInfo.CurrentCulture = culture;
+                CultureInfo.CurrentUICulture = culture;
+
+            }
+
+            await _next(context);
+        }
+    }
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -45,7 +73,7 @@ namespace PM.WebAPI
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-
+            services.AddServerSideBlazor();
             services.AddGrpc();
 
             services.AddLocalization(opts =>
@@ -79,10 +107,14 @@ namespace PM.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseGrpcWeb();
+
+            app.UseMiddleware<RequestCultureMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapBlazorHub();
                 endpoints.MapGrpcService<GreeterService>().EnableGrpcWeb();
                 endpoints.MapFallbackToFile("index.html");
             });

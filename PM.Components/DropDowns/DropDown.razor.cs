@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PM.WebApp.Shared.DropDowns
+namespace PM.Components.DropDowns
 {
     public partial class DropDown<T>
     {
@@ -23,7 +23,7 @@ namespace PM.WebApp.Shared.DropDowns
         private RenderFragment tip;
 
         protected override void OnInitialized() { tip = InitialTip; }
-        public async Task HandleSelect(T item, RenderFragment<T> contentFragment)
+        public async Task HandleSelectAsync(T item, RenderFragment<T> contentFragment)
         {
             tip = contentFragment.Invoke(item);
             show = false;

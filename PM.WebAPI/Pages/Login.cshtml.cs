@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -38,9 +39,9 @@ namespace PM.WebAPI.Pages
 
             [Required]
             [DataType(DataType.Password)]
+            [DisplayName("huhu")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me")]
             public bool RememberMe { get; set; }
         }
 

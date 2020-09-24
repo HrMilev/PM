@@ -37,7 +37,8 @@ app {
   text-overflow: ellipsis; }
 
 .sidebar {
-  background-image: linear-gradient(180deg, #052767 0%, #3a0647 70%); }
+  background-image: linear-gradient(180deg, #ffc107 0%, #FADA5E 90%);
+  color: black; }
 
 .sidebar .top-row {
   background-color: rgba(0, 0, 0, 0.4); }
@@ -62,7 +63,7 @@ app {
   padding-bottom: 1rem; }
 
 .sidebar .nav-item a {
-  color: #d7d7d7;
+  color: black;
   border-radius: 4px;
   height: 3rem;
   display: flex;
@@ -70,18 +71,18 @@ app {
   line-height: 3rem; }
 
 .sidebar .nav-item a.active {
-  background-color: rgba(255, 255, 255, 0.25);
-  color: white; }
+  background-color: rgba(5, 5, 5, 0.25);
+  color: black; }
 
 .sidebar .nav-item a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white; }
+  background-color: rgba(5, 5, 5, 0.1);
+  color: black; }
 
 .content {
   padding-top: 1.1rem; }
 
 .navbar-toggler {
-  background-color: rgba(255, 255, 255, 0.1); }
+  background-color: rgba(5, 5, 5, 0.1); }
 
 .valid.modified:not([type=checkbox]) {
   outline: 1px solid #26b050; }

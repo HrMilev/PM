@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace PM.WebApp.StaticData
+namespace PM.Core.StaticUtilities
 {
     public static class SupportedCultures
     {

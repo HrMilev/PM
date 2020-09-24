@@ -2,6 +2,7 @@
 @model LoginModel
 @inject IStringLocalizer<Localization> Localizer
 
+<component type="typeof(CultureSelector)" render-mode="ServerPrerendered" />
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <h1 class="text-center">@Localizer["Log in"]</h1>
@@ -10,12 +11,12 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
+                    <label>@Localizer["Email"]</label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
+                    <label>@Localizer["Password"]</label>
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>

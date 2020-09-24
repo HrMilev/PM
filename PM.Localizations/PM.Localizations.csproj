@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Localization.bg.resx~RF18295d.TMP" />
+  </ItemGroup>
+
 </Project>

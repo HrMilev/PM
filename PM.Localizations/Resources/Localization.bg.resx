@@ -120,13 +120,25 @@
   <data name="Culture" xml:space="preserve">
     <value>Език</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Е-поща</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Здравей</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Парола</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Регистрация</value>
   </data>
   <data name="Register as a new user" xml:space="preserve">
     <value>Регистрация като нов потребител</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Запомни ме</value>
   </data>
 </root>

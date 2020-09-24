@@ -1,0 +1,6 @@
+﻿@typeparam T
+<a class="dropdown-item"
+   Item="@Item"
+   @onclick="(async e => await DropDown.HandleSelectAsync(Item, ChildContent))">
+    @ChildContent(Item)
+</a>

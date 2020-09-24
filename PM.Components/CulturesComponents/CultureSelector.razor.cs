@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PM.WebApp.Constants;
-using PM.WebApp.StaticData;
+using PM.Core.JSUtilities;
+using PM.Core.StaticUtilities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PM.WebApp.Shared
+namespace PM.Components.CulturesComponents
 {
     public partial class CultureSelector
     {
@@ -15,7 +15,7 @@ namespace PM.WebApp.Shared
         [Inject] NavigationManager NavigationManager { get; set; }
         public IEnumerable<CultureInfo> AvailableCultures = SupportedCultures.Cultures.Where(x => x.Name != CultureInfo.CurrentCulture.Name);
         public string CurrentCultureISO { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
-        public async Task SetCulture(CultureInfo culture)
+        public async Task SetCultureAsync(CultureInfo culture)
         {
             if (CultureInfo.CurrentCulture.Name != culture.Name)
             {

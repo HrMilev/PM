@@ -1,4 +1,4 @@
-﻿namespace PM.WebApp.Constants
+﻿namespace PM.Core.JSUtilities
 {
     public static class JSFunctions
     {

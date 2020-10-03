@@ -1,5 +1,5 @@
 ﻿function setBlazorCulture(value) {
-    document.cookie = `BlazorCulture=${value};expires=${new Date(2147483647 * 1000).toUTCString()}`;
+    document.cookie = `BlazorCulture=${value}; Path=/; expires=${new Date(2147483647 * 1000).toUTCString()}`;
 }
 
 function getBlazorCulture() {

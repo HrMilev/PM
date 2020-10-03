@@ -117,20 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>Потвърди парола</value>
+  </data>
+  <data name="Create a new account" xml:space="preserve">
+    <value>Създаване на нова регистрация</value>
+  </data>
   <data name="Culture" xml:space="preserve">
     <value>Език</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Е-поща</value>
   </data>
+  <data name="Email is required" xml:space="preserve">
+    <value>Е-поща е задължителна</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Здравей</value>
+  </data>
+  <data name="Invalid login attempt" xml:space="preserve">
+    <value>Невалиден опит за вход</value>
   </data>
   <data name="Log in" xml:space="preserve">
     <value>Вход</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Парола</value>
+  </data>
+  <data name="Password is required" xml:space="preserve">
+    <value>Паролата е задължителна</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Регистрация</value>
@@ -140,5 +155,8 @@
   </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомни ме</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Потребителско име</value>
   </data>
 </root>

@@ -16,6 +16,8 @@ using PM.WebAPI.Models;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Globalization;
+using PM.Localizations;
+using Microsoft.Extensions.Localization;
 
 namespace PM.WebAPI
 {
@@ -71,7 +73,10 @@ namespace PM.WebAPI
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddDataAnnotationsLocalization(o =>
+            {
+                o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Localization));
+            });
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddGrpc();

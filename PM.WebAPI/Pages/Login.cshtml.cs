@@ -1,12 +1,13 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using PM.Localizations;
 using PM.WebAPI.Models;
+using PM.WebAPI.Models.View;
 
 namespace PM.WebAPI.Pages
 {
@@ -15,35 +16,24 @@ namespace PM.WebAPI.Pages
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IStringLocalizer<Localization> _localizer;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
-            ILogger<LoginModel> logger)
+            ILogger<LoginModel> logger,
+            IStringLocalizer<Localization> localizer)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _localizer = localizer;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public LoginViewModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
         [TempData]
         public string ErrorMessage { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required]
-            [DataType(DataType.Password)]
-            [DisplayName("huhu")]
-            public string Password { get; set; }
-
-            public bool RememberMe { get; set; }
-        }
 
         public void OnGetAsync(string returnUrl = null)
         {
@@ -69,7 +59,7 @@ namespace PM.WebAPI.Pages
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, _localizer["Invalid login attempt"]);
 
             return Page();
         }

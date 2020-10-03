@@ -12,7 +12,10 @@
 
 <body>
     <div class="main">
-        <div class="content px-4">
+        <div class="content">
+            <div class="d-flex justify-content-end">
+                <component type="typeof(CultureSelector)" render-mode="ServerPrerendered" />
+            </div>
             @RenderBody()
             @RenderSection("scripts", required: false)
         </div>

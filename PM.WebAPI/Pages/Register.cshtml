@@ -1,42 +1,50 @@
 ﻿@page "/Register"
 @model RegisterModel
-@inject IStringLocalizer<Localization> loc
-
-<h1>@loc["Register"]</h1>
+@inject IStringLocalizer<Localization> Localizer
+@inject IConfiguration Configuration
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 offset-md-4">
+        <h1 class="text-center">
+            @Localizer["Create a new account"]
+        </h1>
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>
-                @loc["Create a new account"]
-            </h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Input.Username">@loc["Username"]</label>
+                <label asp-for="Input.Username">@Localizer["Username"]</label>
                 <input asp-for="Input.Username" class="form-control" />
                 <span asp-validation-for="Input.Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@loc["Email"]</label>
+                <label>@Localizer["Email"]</label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@loc["Password"]</label>
+                <label>@Localizer["Password"]</label>
                 <input asp-for="Input.Password" class="form-control" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>@loc["Confirm Password"]</label>
+                <label>@Localizer["Confirm Password"]</label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">@loc["Register"]</button>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
+            </div>
+            <input type="hidden" asp-for="Input.Captcha" id="captchaInput" value="" />
         </form>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@Configuration["googleReCaptcha:SiteKey"]').then(function (token) {
+                document.getElementById("captchaInput").value = token;
+            });
+        });
+    </script>
 }

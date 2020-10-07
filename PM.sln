@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Localizations", "PM.Localizations\PM.Localizations.csproj", "{7C219A8E-EF64-4064-830C-AE77070FC792}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PM.Components", "PM.Components\PM.Components.csproj", "{55AFB927-CB5E-418A-AB5B-35411D3055A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Components", "PM.Components\PM.Components.csproj", "{55AFB927-CB5E-418A-AB5B-35411D3055A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

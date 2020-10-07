@@ -1,41 +1,48 @@
 ﻿@page
 @model LoginModel
 @inject IStringLocalizer<Localization> Localizer
+@inject IConfiguration Configuration
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <h1 class="text-center">@Localizer["Log in"]</h1>
-        <section>
-            <form id="account" method="post">
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <form id="account" method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input asp-for="Input.RememberMe" />
+                    <label asp-for="Input.RememberMe"></label>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <input asp-for="Input.RememberMe" />
-                        <label asp-for="Input.RememberMe"></label>
-                    </div>
-                </div>
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-success">@Localizer["Log in"]</button>
-                </div>
-                <p class="h5 text-center m-5">
-                    <a class="badge badge-primary h2 text-wrap" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["Register as a new user"]</a>
-                </p>
-            </form>
-        </section>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-success">@Localizer["Log in"]</button>
+            </div>
+            <p class="h5 text-center m-5">
+                <a class="badge badge-primary h2 text-wrap" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@Localizer["Register as a new user"]</a>
+            </p>
+
+            <input type="hidden" asp-for="Input.Captcha" id="captchaInput" value="" />
+        </form>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="Shared/_ValidationScriptsPartial" />
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@Configuration["googleReCaptcha:SiteKey"]').then(function (token) {
+                document.getElementById("captchaInput").value = token;
+            });
+        });
+    </script>
 }

@@ -16,5 +16,7 @@ namespace PM.WebAPI.Models.View
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        public string Captcha { get; set; }
     }
 }

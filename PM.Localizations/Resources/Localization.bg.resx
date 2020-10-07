@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A user with this login already exists" xml:space="preserve">
+    <value>Потребител с такова име вече съществува</value>
+  </data>
   <data name="Confirm Password" xml:space="preserve">
     <value>Потвърди парола</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Email" xml:space="preserve">
     <value>Е-поща</value>
+  </data>
+  <data name="Email '{0}' is already taken" xml:space="preserve">
+    <value>Имейл '{0}' е вече зает</value>
   </data>
   <data name="Email is required" xml:space="preserve">
     <value>Е-поща е задължителна</value>
@@ -155,6 +161,9 @@
   </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомни ме</value>
+  </data>
+  <data name="User name '{0}' is already taken" xml:space="preserve">
+    <value>Потребителското име '{0}' е вече заето</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Потребителско име</value>

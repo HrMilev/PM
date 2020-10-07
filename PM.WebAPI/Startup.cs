@@ -18,34 +18,12 @@ using System.Threading.Tasks;
 using System.Globalization;
 using PM.Localizations;
 using Microsoft.Extensions.Localization;
+using GoogleReCaptcha.V3.Interface;
+using GoogleReCaptcha.V3;
+using PM.WebAPI.Middlewares;
 
 namespace PM.WebAPI
 {
-    public class RequestCultureMiddleware
-    {
-        private readonly RequestDelegate _next;
-
-        public RequestCultureMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            var cultureQuery = context.Request.Cookies["BlazorCulture"];
-            if (!string.IsNullOrWhiteSpace(cultureQuery))
-            {
-                var culture = new CultureInfo(cultureQuery);
-
-                CultureInfo.CurrentCulture = culture;
-                CultureInfo.CurrentUICulture = culture;
-
-            }
-
-            await _next(context);
-        }
-    }
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -62,7 +40,8 @@ namespace PM.WebAPI
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddErrorDescriber<MultilanguageIdentityErrorDescriber>();
 
             services.AddIdentityServer(o =>
             {
@@ -72,7 +51,10 @@ namespace PM.WebAPI
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-
+            services.Configure<IdentityOptions>(o =>
+            {
+                o.User.RequireUniqueEmail = true;
+            });
             services.AddControllersWithViews().AddDataAnnotationsLocalization(o =>
             {
                 o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Localization));
@@ -80,7 +62,7 @@ namespace PM.WebAPI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddGrpc();
-
+            services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
             services.AddLocalization(opts =>
             {
                 opts.ResourcesPath = "Resources";
@@ -113,7 +95,7 @@ namespace PM.WebAPI
             app.UseAuthorization();
             app.UseGrpcWeb();
 
-            app.UseMiddleware<RequestCultureMiddleware>();
+            app.UseMiddleware<CultureMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

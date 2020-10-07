@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +18,17 @@ namespace PM.WebAPI.Pages
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IStringLocalizer<Localization> _localizer;
+        private readonly ICaptchaValidator _captchaValidator;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            IStringLocalizer<Localization> localizer)
+            IStringLocalizer<Localization> localizer,
+            ICaptchaValidator captchaValidator)
         {
             _signInManager = signInManager;
             _logger = logger;
             _localizer = localizer;
+            _captchaValidator = captchaValidator;
         }
 
         [BindProperty]
@@ -48,7 +52,10 @@ namespace PM.WebAPI.Pages
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
+            if (!await _captchaValidator.IsCaptchaPassedAsync(Input.Captcha))
+            {
+                ModelState.AddModelError("captcha", _localizer["Captcha validation failed"]);
+            }
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);

@@ -1,0 +1,18 @@
+﻿<div class="card border border-dark">
+    <button class="card-header bg-dark rounded-pill btn text-warning" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        @TextFragment
+    </button>
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+        <div class="card-body">
+            @BodyFragment
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment TextFragment { get; set; }
+
+    [Parameter]
+    public RenderFragment BodyFragment { get; set; }
+}

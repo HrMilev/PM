@@ -123,11 +123,20 @@
   <data name="Confirm Password" xml:space="preserve">
     <value>Потвърди парола</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Създай</value>
+  </data>
   <data name="Create a new account" xml:space="preserve">
     <value>Създаване на нова регистрация</value>
   </data>
+  <data name="Create ToDo" xml:space="preserve">
+    <value>Създай ToDo</value>
+  </data>
   <data name="Culture" xml:space="preserve">
     <value>Език</value>
+  </data>
+  <data name="Description is required" xml:space="preserve">
+    <value>Описанието е задължително</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Е-поща</value>
@@ -138,6 +147,9 @@
   <data name="Email is required" xml:space="preserve">
     <value>Е-поща е задължителна</value>
   </data>
+  <data name="End at" xml:space="preserve">
+    <value>Край</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Здравей</value>
   </data>
@@ -146,6 +158,9 @@
   </data>
   <data name="Log in" xml:space="preserve">
     <value>Вход</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Изход</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Парола</value>
@@ -161,6 +176,12 @@
   </data>
   <data name="Remember me" xml:space="preserve">
     <value>Запомни ме</value>
+  </data>
+  <data name="Start at" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Задача</value>
   </data>
   <data name="User name '{0}' is already taken" xml:space="preserve">
     <value>Потребителското име '{0}' е вече заето</value>

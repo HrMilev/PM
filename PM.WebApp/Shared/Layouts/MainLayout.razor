@@ -7,13 +7,18 @@
         </div>
 
         <div class="main">
-            <div class="top-row px-4 auth">
-                <LoginDisplay />
-                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-                <div class="ml-4">
-                    <CultureSelector />
+            <nav class="navbar navbar-expand bg-dark navbar-dark justify-content-end">
+                <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <LoginDisplay />
+                        <li class="nav-item">
+                            <div class="ml-4">
+                                <CultureSelector />
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </nav>
 
             <div class="content px-4">
                 @Body

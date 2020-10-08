@@ -1,0 +1,45 @@
+﻿@inject IStringLocalizer<Localization> loc
+<Collapsible>
+    <TextFragment>
+        <i class="icon-plus-sign"></i> @loc["Create ToDo"]
+    </TextFragment>
+    <BodyFragment>
+        <EditForm Model="toDo" OnValidSubmit="Create">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="toDoDescription">@loc["Task"]</label>
+                <InputTextArea class="form-control border-dark"
+                               id="toDoDescription"
+                               rows="3"
+                               @bind-Value="@toDo.Description">
+                </InputTextArea>
+                <ValidationMessage For="@(() => toDo.Description)" />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="toDoStartDate">@loc["Start at"]</label>
+                    <InputDateTime @bind-Value="@toDo.StartDate" id="toDoStartDate" class="form-control border-dark"></InputDateTime>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="toDoEndDate">@loc["End at"]</label>
+                    <InputDateTime @bind-Value="@toDo.EndDate" id="toDoEndDate" class="form-control border-dark"></InputDateTime>
+                </div>
+            </div>
+            <button class="btn btn-warning" type="submit">@loc["Create"]</button>
+        </EditForm>
+    </BodyFragment>
+</Collapsible>
+@code {
+    private ToDoViewModel toDo = new ToDoViewModel
+    {
+        StartDate = DateTime.Now,
+        EndDate = DateTime.Now.AddHours(1)
+    };
+
+    private void Create()
+    {
+        Console.WriteLine(toDo.Description);
+        Console.WriteLine(toDo.StartDate);
+        Console.WriteLine(toDo.StartDate.ToUniversalTime());
+    }
+}

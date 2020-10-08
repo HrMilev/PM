@@ -1,23 +1,14 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 using PM.WebAPI.Data;
 using PM.WebAPI.Models;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.Globalization;
 using PM.Localizations;
-using Microsoft.Extensions.Localization;
 using GoogleReCaptcha.V3.Interface;
 using GoogleReCaptcha.V3;
 using PM.WebAPI.Middlewares;
@@ -51,13 +42,14 @@ namespace PM.WebAPI
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-            services.Configure<IdentityOptions>(o =>
-            {
-                o.User.RequireUniqueEmail = true;
-            });
+
             services.AddControllersWithViews().AddDataAnnotationsLocalization(o =>
             {
                 o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Localization));
+            });
+            services.Configure<IdentityOptions>(o =>
+            {
+                o.User.RequireUniqueEmail = true;
             });
             services.AddRazorPages();
             services.AddServerSideBlazor();
@@ -67,6 +59,7 @@ namespace PM.WebAPI
             {
                 opts.ResourcesPath = "Resources";
             });
+            services.AddPMConfigurations();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -80,7 +73,6 @@ namespace PM.WebAPI
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

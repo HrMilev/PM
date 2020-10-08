@@ -16,16 +16,19 @@ namespace PM.WebAPI.Pages
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IStringLocalizer<Localization> _localizer;
         private readonly ICaptchaValidator _captchaValidator;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
             ILogger<LoginModel> logger,
             IStringLocalizer<Localization> localizer,
             ICaptchaValidator captchaValidator)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
             _localizer = localizer;
             _captchaValidator = captchaValidator;
@@ -58,7 +61,8 @@ namespace PM.WebAPI.Pages
             }
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, false);
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

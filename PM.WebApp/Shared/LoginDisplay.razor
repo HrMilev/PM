@@ -3,16 +3,17 @@
 
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject IStringLocalizer<Localization> loc
 
 <AuthorizeView>
     <Authorized>
-        <a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        <li class="nav-item">
+            <a class="nav-link text-warning" href="authentication/profile">@loc["Hello"], @context.User.Identity.Name!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-warning" @onclick="BeginSignOut">@loc["Log out"]</a>
+        </li>
     </Authorized>
-    <NotAuthorized>
-        <a href="authentication/register">Register</a>
-        <a href="authentication/login">Log in</a>
-    </NotAuthorized>
 </AuthorizeView>
 
 @code{

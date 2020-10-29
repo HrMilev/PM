@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PM.Core.JSUtilities;
+using PM.Common.JSUtilities;
 using System.Threading.Tasks;
 
 namespace PM.WebApp.Shared.Buttons

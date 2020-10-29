@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PM.Core.Models.View
+namespace PM.Common.Models.Rest
 {
-    public class ToDoViewModel
+    public class ToDoRestModel
     {
         [Required]
         public string Description { get; set; }

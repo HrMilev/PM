@@ -10,7 +10,12 @@ using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
-using PM.Core.JSUtilities;
+using PM.Common.JSUtilities;
+using PM.WebApp.Infrastructure.Repositories.Interfaces;
+using PM.WebApp.Infrastructure.Repositories;
+using PM.WebApp.Infrastructure.Utils.Interfaces;
+using PM.WebApp.Infrastructure.Utils;
+using PM.WebApp.Configurations;
 
 namespace PM.WebApp
 {
@@ -44,21 +49,11 @@ namespace PM.WebApp
             {
                 opts.ResourcesPath = "Resources";
             });
-            var host = builder.Build();
-            await SetCulture(host);
-            await host.RunAsync();
-        }
 
-        public static async Task SetCulture(WebAssemblyHost host)
-        {
-            var js = host.Services.GetRequiredService<IJSRuntime>();
-            var result = await js.InvokeAsync<string>(JSFunctions.GetBlazorCulture);
-            if (result != null)
-            {
-                var culture = new CultureInfo(result);
-                CultureInfo.DefaultThreadCurrentCulture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
-            }
+            builder.Services.AddPMServices();
+            var host = builder.Build();
+            await host.Services.GetRequiredService<IJSRuntime>().SetCulture();
+            await host.RunAsync();
         }
     }
 }

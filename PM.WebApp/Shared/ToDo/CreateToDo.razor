@@ -1,4 +1,5 @@
 ﻿@inject IStringLocalizer<Localization> loc
+@inject IToDoRepository toDoRepository
 <Collapsible>
     <TextFragment>
         <i class="icon-plus-sign"></i> @loc["Create ToDo"]
@@ -30,7 +31,7 @@
     </BodyFragment>
 </Collapsible>
 @code {
-    private ToDoViewModel toDo = new ToDoViewModel
+    private ToDoRestModel toDo = new ToDoRestModel
     {
         StartDate = DateTime.Now,
         EndDate = DateTime.Now.AddHours(1)
@@ -38,6 +39,7 @@
 
     private void Create()
     {
+        toDoRepository.Create(toDo);
         Console.WriteLine(toDo.Description);
         Console.WriteLine(toDo.StartDate);
         Console.WriteLine(toDo.StartDate.ToUniversalTime());

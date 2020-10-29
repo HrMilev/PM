@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using PM.Core.JSUtilities;
-using PM.Core.StaticUtilities;
+using PM.Common.JSUtilities;
+using PM.Common.StaticUtilities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

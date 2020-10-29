@@ -1,4 +1,4 @@
-﻿namespace PM.Core.JSUtilities
+﻿namespace PM.Common.JSUtilities
 {
     public static class JSFunctions
     {

@@ -62,11 +62,14 @@ namespace PM.WebAPI.Pages
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, false);
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
                 }
             }
 

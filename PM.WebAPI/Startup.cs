@@ -12,6 +12,8 @@ using PM.Localizations;
 using GoogleReCaptcha.V3.Interface;
 using GoogleReCaptcha.V3;
 using PM.WebAPI.Middlewares;
+using PM.WebAPI.Configurations;
+using AutoMapper;
 
 namespace PM.WebAPI
 {
@@ -39,7 +41,7 @@ namespace PM.WebAPI
                 o.UserInteraction.LoginUrl = "/Login";
             })
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
+            services.AddHttpContextAccessor();
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
@@ -59,7 +61,8 @@ namespace PM.WebAPI
             {
                 opts.ResourcesPath = "Resources";
             });
-            services.AddPMConfigurations();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddPMServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

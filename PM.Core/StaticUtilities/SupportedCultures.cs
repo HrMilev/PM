@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace PM.Core.StaticUtilities
+namespace PM.Common.StaticUtilities
 {
     public static class SupportedCultures
     {

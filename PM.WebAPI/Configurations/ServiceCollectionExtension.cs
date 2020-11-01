@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PM.WebAPI.Data.Repositories;
-using PM.WebAPI.Data.Repositories.Interfaces;
+using PM.Data.Repositories;
+using PM.Data.Repositories.Interfaces;
 using PM.WebAPI.Services;
 using PM.WebAPI.Services.Interfaces;
 

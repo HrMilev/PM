@@ -2,13 +2,9 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
-using PM.WebAPI.Models;
-using PM.WebAPI.Models.Entities.ToDoEntities;
+using PM.Data.Entities.ToDos;
+using PM.Data.Entities.Users;
 
 namespace PM.Data
 {

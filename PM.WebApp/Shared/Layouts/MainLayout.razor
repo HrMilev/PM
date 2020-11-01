@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
-
+@inject SupportedCulturesService supportedCultureSevice
+@inject AlertService alertService
 <AuthorizeView>
     <Authorized>
         <div class="sidebar">
@@ -13,13 +14,13 @@
                         <LoginDisplay />
                         <li class="nav-item">
                             <div class="ml-4">
-                                <CultureSelector />
+                                <CultureSelector AvailableCultures="supportedCultureSevice.Cultures" />
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
-
+            <AlertContainer />
             <div class="content px-4">
                 @Body
             </div>

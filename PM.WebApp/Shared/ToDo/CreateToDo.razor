@@ -1,11 +1,12 @@
 ﻿@inject IStringLocalizer<Localization> loc
 @inject IToDoRepository toDoRepository
+@inject AlertService alertService
 <Collapsible>
     <TextFragment>
         <i class="icon-plus-sign"></i> @loc["Create ToDo"]
     </TextFragment>
     <BodyFragment>
-        <EditForm Model="toDo" OnValidSubmit="Create">
+        <EditForm Model="toDo" OnValidSubmit="CreateAsync">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="toDoDescription">@loc["Task"]</label>
@@ -37,11 +38,9 @@
         EndDate = DateTime.Now.AddHours(1)
     };
 
-    private void Create()
+    private async Task CreateAsync()
     {
-        toDoRepository.Create(toDo);
-        Console.WriteLine(toDo.Description);
-        Console.WriteLine(toDo.StartDate);
-        Console.WriteLine(toDo.StartDate.ToUniversalTime());
+        //await toDoRepository.Create(toDo);
+        alertService.PushMessage(PM.WebApp.Infrastructure.Utils.Enums.AlertMessageEnum.Success, "Ura adasd ad");
     }
 }

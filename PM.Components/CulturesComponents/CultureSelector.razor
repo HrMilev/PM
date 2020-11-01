@@ -1,5 +1,5 @@
 ﻿<DropDown OnSelected="@(async (CultureInfo culture) => await SetCultureAsync(culture))"
-          Items=@AvailableCultures>
+          Items=@availableCultures>
     <InitialTip>
         @CurrentCultureISO
     </InitialTip>

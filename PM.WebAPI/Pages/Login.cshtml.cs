@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using PM.Data.Entities.Users;
 using PM.Localizations;
-using PM.WebAPI.Models;
 using PM.WebAPI.Models.View;
 
 namespace PM.WebAPI.Pages

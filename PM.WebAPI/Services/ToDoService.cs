@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http;
 using PM.Common.Models.Rest;
-using PM.WebAPI.Data.Repositories.Interfaces;
-using PM.WebAPI.Models.Entities.ToDoEntities;
+using PM.Data.Entities.ToDos;
+using PM.Data.Repositories.Interfaces;
 using PM.WebAPI.Services.Interfaces;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -22,11 +22,12 @@ namespace PM.WebAPI.Services
             _mapper = mapper;
             _httpContext = httpContext;
         }
-        public async Task<ToDo> CreateAsync(ToDoRestModel toDoRestModel)
+        public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel)
         {
             var todo = _mapper.Map<ToDo>(toDoRestModel);
             todo.UserId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return await _toDoRepository.SaveAsync(todo);
+            todo = await _toDoRepository.SaveAsync(todo);
+            return _mapper.Map<ToDoRestModel>(todo);
         }
     }
 }

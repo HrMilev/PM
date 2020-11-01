@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PM.Common.JSUtilities;
-using PM.Common.StaticUtilities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,7 +12,15 @@ namespace PM.Components.CulturesComponents
     {
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-        public IEnumerable<CultureInfo> AvailableCultures = SupportedCultures.Cultures.Where(x => x.Name != CultureInfo.CurrentCulture.Name);
+        private IEnumerable<CultureInfo> availableCultures;
+        [Parameter]
+        public IEnumerable<CultureInfo> AvailableCultures
+        {
+            set
+            {
+                availableCultures = value.Where(x => x.Name != CultureInfo.CurrentCulture.Name);
+            }
+        }
         public string CurrentCultureISO { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
         public async Task SetCultureAsync(CultureInfo culture)
         {

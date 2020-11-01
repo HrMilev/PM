@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PM.WebAPI.Data;
 using PM.WebAPI.Models;
 using PM.Localizations;
 using GoogleReCaptcha.V3.Interface;
@@ -14,6 +13,9 @@ using GoogleReCaptcha.V3;
 using PM.WebAPI.Middlewares;
 using PM.WebAPI.Configurations;
 using AutoMapper;
+using PM.Data;
+using PM.Data.Entities.Users;
+using System.Text.Json;
 
 namespace PM.WebAPI
 {
@@ -30,7 +32,9 @@ namespace PM.WebAPI
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("PM.WebAPI")));
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -45,10 +49,15 @@ namespace PM.WebAPI
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews().AddDataAnnotationsLocalization(o =>
-            {
-                o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Localization));
-            });
+            services.AddControllersWithViews()
+                .AddDataAnnotationsLocalization(o =>
+                {
+                    o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Localization));
+                })
+                .AddJsonOptions(o =>
+                {
+                    o.JsonSerializerOptions.IgnoreNullValues = true;
+                });
             services.Configure<IdentityOptions>(o =>
             {
                 o.User.RequireUniqueEmail = true;
@@ -61,7 +70,6 @@ namespace PM.WebAPI
             {
                 opts.ResourcesPath = "Resources";
             });
-            services.AddAutoMapper(typeof(Startup));
             services.AddPMServices();
         }
 

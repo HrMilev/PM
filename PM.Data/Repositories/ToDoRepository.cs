@@ -1,9 +1,9 @@
 ﻿using PM.Data;
-using PM.WebAPI.Data.Repositories.Base;
-using PM.WebAPI.Data.Repositories.Interfaces;
-using PM.WebAPI.Models.Entities.ToDoEntities;
+using PM.Data.Entities.ToDos;
+using PM.Data.Repositories.Bases;
+using PM.Data.Repositories.Interfaces;
 
-namespace PM.WebAPI.Data.Repositories
+namespace PM.Data.Repositories
 {
     public class ToDoRepository : RepositoryBase<ToDo>, IToDoRepository
     {

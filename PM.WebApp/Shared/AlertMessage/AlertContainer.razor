@@ -1,0 +1,30 @@
+﻿@inject AlertService alertService
+@implements IDisposable
+<div class="alert-container">
+    @foreach (var alert in alertService.Alerts)
+    {
+        <div class="alert alert-@alert.Type.ToString().ToLower() text-dark">@alert.Message</div>
+    }
+
+    <div class="alert alert-danger">Test Essseeses!</div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        alertService.RequestRefresh += Refresh;
+    }
+
+    private async Task Refresh()
+    {
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        alertService.RequestRefresh -= Refresh;
+    }
+}

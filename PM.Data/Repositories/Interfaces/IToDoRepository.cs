@@ -1,7 +1,7 @@
-﻿using PM.WebAPI.Data.Repositories.Base.Interfaces;
-using PM.WebAPI.Models.Entities.ToDoEntities;
+﻿using PM.Data.Entities.ToDos;
+using PM.Data.Repositories.Bases.Interfaces;
 
-namespace PM.WebAPI.Data.Repositories.Interfaces
+namespace PM.Data.Repositories.Interfaces
 {
     public interface IToDoRepository : IRepositoryBase<ToDo>
     {

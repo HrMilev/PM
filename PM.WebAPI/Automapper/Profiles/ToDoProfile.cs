@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PM.Common.Models.Rest;
-using PM.WebAPI.Models.Entities.ToDoEntities;
+using PM.Data.Entities.ToDos;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace PM.WebAPI.Automapper.Profiles
 {
@@ -12,7 +11,11 @@ namespace PM.WebAPI.Automapper.Profiles
     {
         public ToDoProfile()
         {
-            CreateMap<ToDo, ToDoRestModel>().ReverseMap();
+            CreateMap<ToDo, ToDoRestModel>();
+            CreateMap<ToDoRestModel, ToDo>()
+                .ForMember(x => x.StartDate, y => y.MapFrom(z => z.StartDate.ToUniversalTime()))
+                .ForMember(x => x.EndDate, y => y.MapFrom(z => z.EndDate.ToUniversalTime()))
+                .ForMember(x => x.CreateDate, y => y.MapFrom(z => DateTime.UtcNow));
         }
     }
 }

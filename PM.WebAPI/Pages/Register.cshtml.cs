@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using PM.Localizations;
-using PM.WebAPI.Models;
+using PM.Data.Entities.Users;
 using PM.WebAPI.Models.View;
 
 namespace PM.WebAPI.Pages

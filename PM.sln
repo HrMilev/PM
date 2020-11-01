@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Localizations", "PM.Loca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Components", "PM.Components\PM.Components.csproj", "{55AFB927-CB5E-418A-AB5B-35411D3055A0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PM.Data", "PM.Data\PM.Data.csproj", "{3A4730C6-4263-41E3-BF42-20B2C824FB23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{55AFB927-CB5E-418A-AB5B-35411D3055A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55AFB927-CB5E-418A-AB5B-35411D3055A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55AFB927-CB5E-418A-AB5B-35411D3055A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A4730C6-4263-41E3-BF42-20B2C824FB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A4730C6-4263-41E3-BF42-20B2C824FB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A4730C6-4263-41E3-BF42-20B2C824FB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A4730C6-4263-41E3-BF42-20B2C824FB23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

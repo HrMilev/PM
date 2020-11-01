@@ -12,14 +12,12 @@ namespace PM.Components.CulturesComponents
     {
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-        private IEnumerable<CultureInfo> availableCultures;
         [Parameter]
-        public IEnumerable<CultureInfo> AvailableCultures
+        public IEnumerable<string> AvailableCultures { get; set; }
+        private IEnumerable<CultureInfo> availableCultures;
+        private IEnumerable<CultureInfo> GetAvailableCultures()
         {
-            set
-            {
-                availableCultures = value.Where(x => x.Name != CultureInfo.CurrentCulture.Name);
-            }
+            return availableCultures = availableCultures ?? AvailableCultures.Where(x => x != CultureInfo.CurrentCulture.Name).Select(x => new CultureInfo(x));
         }
         public string CurrentCultureISO { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
         public async Task SetCultureAsync(CultureInfo culture)

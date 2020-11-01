@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PM.Common.Utils.Culture;
 using PM.Data.Repositories;
 using PM.Data.Repositories.Interfaces;
 using PM.WebAPI.Services;
@@ -12,6 +13,7 @@ namespace PM.WebAPI.Configurations
         {
             services.AddTransient<IToDoRepository, ToDoRepository>();
             services.AddTransient<IToDoService, ToDoService>();
+            services.AddSingleton<SupportedCulturesService>();
         }
     }
 }

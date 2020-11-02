@@ -3,10 +3,8 @@
 <div class="alert-container">
     @foreach (var alert in alertService.Alerts)
     {
-        <div class="alert alert-@alert.Type.ToString().ToLower() text-dark">@alert.Message</div>
+        <Alert Message=@alert.Message Type=@alert.Type></Alert>
     }
-
-    <div class="alert alert-danger">Test Essseeses!</div>
 </div>
 
 @code {

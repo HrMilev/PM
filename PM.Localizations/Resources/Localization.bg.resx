@@ -132,6 +132,9 @@
   <data name="Create ToDo" xml:space="preserve">
     <value>Създай ToDo</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Създадено</value>
+  </data>
   <data name="Culture" xml:space="preserve">
     <value>Език</value>
   </data>

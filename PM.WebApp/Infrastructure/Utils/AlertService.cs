@@ -16,19 +16,24 @@ namespace PM.WebApp.Infrastructure.Utils
             Alerts = new List<Alert>();
         }
 
-        public async void PushMessage(AlertMessageEnum type, string message)
+        public void PushMessage(AlertMessageEnum type, string message)
         {
             var alert = new Alert { Message = message, Type = type };
 
-            Task.Run(async () =>
+            Alerts.Add(alert);
+            Task.Run(Remove(alert));
+
+            RequestRefresh?.Invoke();
+        }
+
+        private Action Remove(Alert alert)
+        {
+            return async () =>
             {
                 await Task.Delay(3000);
                 Alerts.Remove(alert);
                 RequestRefresh?.Invoke();
-            });
-
-            Alerts.Add(alert);
-            await RequestRefresh?.Invoke();
+            };
         }
     }
 }

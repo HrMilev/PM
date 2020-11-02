@@ -1,0 +1,19 @@
+﻿<div class="alert alert-@Type.ToString().ToLower()" style="display: @(isClosed ? "none" : "block")">
+    @Message
+    <i class="icon-remove-sign"
+       style=" right: 5px; top: 5px; position: absolute; "
+       @onclick="OnClose" />
+</div>
+
+@code {
+    [Parameter]
+    public PM.WebApp.Infrastructure.Utils.Enums.AlertMessageEnum Type { get; set; }
+    [Parameter]
+    public string Message { get; set; }
+    private bool isClosed;
+
+    private void OnClose()
+    {
+        Task.Run(() => isClosed = true);
+    }
+}

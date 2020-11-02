@@ -132,6 +132,9 @@
   <data name="Create ToDo" xml:space="preserve">
     <value>Create ToDo</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
+  </data>
   <data name="Culture" xml:space="preserve">
     <value>Culture</value>
   </data>

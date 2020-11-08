@@ -1,0 +1,9 @@
+﻿<div>
+    <div>@Model.StartDate</div>
+    <div>@Model.EndDate</div>
+    <div>@Model.Description</div>
+</div>
+@code {
+    [Parameter]
+    public ToDoRestModel Model { get; set; }
+}

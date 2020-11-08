@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PM.Common.Models.Rest;
 using PM.WebAPI.Services.Interfaces;
@@ -19,9 +18,13 @@ namespace PM.WebAPI.Controllers
             _toDoService = toDoService;
         }
 
-        [HttpPost()]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Get()
+        {
+            var todos = _toDoService.GetList();
+            return Ok(todos);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Post(ToDoRestModel toDoViewModel)
         {
             var todo = await _toDoService.CreateAsync(toDoViewModel);

@@ -8,6 +8,7 @@ namespace PM.WebApp.Infrastructure.Repositories.Interfaces
 {
     public interface IToDoRepository
     {
-        Task Create(ToDoRestModel toDo);
+        Task<ToDoRestModel> CreateAsync(ToDoRestModel toDo);
+        Task<IEnumerable<ToDoRestModel>> GetToDos();
     }
 }

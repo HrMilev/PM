@@ -8,6 +8,7 @@ namespace PM.WebApp.Infrastructure.Utils.Interfaces
 {
     public interface IHttpService
     {
-        Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T data);
+        Task<HttpResponseWrapper<T>> GetAsync<T>(string url);
+        Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data);
     }
 }

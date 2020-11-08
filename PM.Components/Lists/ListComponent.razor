@@ -1,0 +1,17 @@
+﻿@typeparam T
+<div class="list-group">
+    @foreach (var element in Elements)
+    {
+        @if (element != null)
+        {
+            @ChildContent(element)
+        }
+    }
+</div>
+@code {
+    [Parameter]
+    public IEnumerable<T> Elements { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> ChildContent { get; set; }
+}

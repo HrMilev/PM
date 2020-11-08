@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PM.Data.Repositories.Bases.Interfaces;
+﻿using PM.Data.Repositories.Bases.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PM.Data.Repositories.Bases
@@ -32,9 +32,16 @@ namespace PM.Data.Repositories.Bases
             }
         }
 
-        public virtual async Task<IList<T>> GetAllAsync()
+        public virtual IEnumerable<T> GetAll(Func<T, bool> predicate)
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return _dbContext.Set<T>().Where(predicate);
+        }
+
+        public virtual async Task DeleteAsync(Func<T, bool> predicate)
+        {
+            var entitiesToRemove = _dbContext.Set<T>().Where(predicate);
+            _dbContext.Set<T>().RemoveRange(entitiesToRemove);
+            await _dbContext.SaveChangesAsync();
         }
 
         private void ThrowIfNull(T entity, string methodName)

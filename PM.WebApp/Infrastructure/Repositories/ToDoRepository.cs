@@ -3,7 +3,6 @@ using PM.WebApp.Infrastructure.Repositories.Interfaces;
 using PM.WebApp.Infrastructure.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PM.WebApp.Infrastructure.Repositories
@@ -18,14 +17,29 @@ namespace PM.WebApp.Infrastructure.Repositories
             _httpService = httpService;
         }
 
-        public async Task Create(ToDoRestModel toDo)
+        public async Task<IEnumerable<ToDoRestModel>> GetToDos()
         {
-            var response = await _httpService.PostAsync(URL, toDo);
+            var response = await _httpService.GetAsync<IEnumerable<ToDoRestModel>>(URL);
+
 
             if (!response.IsSuccess)
             {
                 throw new ApplicationException(await response.GetBodyAsync());
             }
+
+            return response.Response;
+        }
+
+        public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDo)
+        {
+            var response = await _httpService.PostAsync<ToDoRestModel, ToDoRestModel>(URL, toDo);
+
+            if (!response.IsSuccess)
+            {
+                throw new ApplicationException(await response.GetBodyAsync());
+            }
+
+            return response.Response;
         }
     }
 }

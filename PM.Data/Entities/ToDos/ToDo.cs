@@ -12,5 +12,6 @@ namespace PM.Data.Entities.ToDos
         public DateTime CreateDate { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
+        public bool IsFinished { get; set; }
     }
 }

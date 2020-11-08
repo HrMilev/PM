@@ -40,7 +40,7 @@
 
     private async Task CreateAsync()
     {
-        await toDoRepository.Create(toDo);
-        alertService.PushMessage(PM.WebApp.Infrastructure.Utils.Enums.AlertMessageEnum.Success, loc["Created"]);
+        var todo = await toDoRepository.CreateAsync(toDo);
+        alertService.PushMessage(PM.WebApp.Infrastructure.Utils.Enums.AlertMessageEnum.Success, loc["Created"] + todo.Id);
     }
 }

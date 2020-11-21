@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PM.Common.Models.Rest;
@@ -18,17 +19,23 @@ namespace PM.WebAPI.Controllers
             _toDoService = toDoService;
         }
 
-        public IActionResult Get()
+        public ActionResult<IEnumerable<ToDoRestModel>> Get([FromQuery] PageableRestModel pageableRestModel)
         {
             var todos = _toDoService.GetList();
             return Ok(todos);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<ToDoRestModel> Get(int id)
+        {
+            return null;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(ToDoRestModel toDoViewModel)
         {
             var todo = await _toDoService.CreateAsync(toDoViewModel);
-            return StatusCode(201, todo);
+            return CreatedAtAction("GET", todo.Id, todo);
         }
     }
 }

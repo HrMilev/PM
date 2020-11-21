@@ -1,44 +1,45 @@
 ﻿@inherits LayoutComponentBase
 @inject SupportedCulturesService supportedCultureSevice
 @inject AlertService alertService
-<AuthorizeView>
-    <Authorized>
-        <div class="sidebar">
-            <NavMenu />
-        </div>
-
-        <div class="main">
-            <nav class="navbar navbar-expand bg-dark navbar-dark justify-content-end">
-                <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <LoginDisplay />
-                        <li class="nav-item">
-                            <div class="ml-4">
-                                <CultureSelector AvailableCultures="supportedCultureSevice.Cultures" />
-                            </div>
-                        </li>
-                    </ul>
+    <div class="page">
+        <AuthorizeView>
+            <Authorized>
+                <div class="sidebar">
+                    <NavMenu />
                 </div>
-            </nav>
-            <AlertContainer />
-            <div class="content px-4">
-                @Body
-            </div>
-        </div>
-    </Authorized>
-    <NotAuthorized>
-        <div class="main">
-            <div class="content">
-                @Body
-            </div>
-        </div>
-    </NotAuthorized>
-    <Authorizing>
-        <div class="main">
-            <div class="content">
-                @Body
-            </div>
-        </div>
-    </Authorizing>
-</AuthorizeView>
 
+                <div class="main">
+                    <nav class="navbar navbar-expand bg-dark navbar-dark justify-content-end">
+                        <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <LoginDisplay />
+                                <li class="nav-item">
+                                    <div class="ml-4">
+                                        <CultureSelector AvailableCultures="supportedCultureSevice.Cultures" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <AlertContainer />
+                    <div class="content px-4">
+                        @Body
+                    </div>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="main">
+                    <div class="content">
+                        @Body
+                    </div>
+                </div>
+            </NotAuthorized>
+            <Authorizing>
+                <div class="main">
+                    <div class="content">
+                        @Body
+                    </div>
+                </div>
+            </Authorizing>
+        </AuthorizeView>
+    </div>

@@ -15,6 +15,11 @@ namespace PM.Data.Repositories.Bases
             _dbContext = dbContext;
         }
 
+        public IQueryable<T> GetQueryable()
+        {
+            return _dbContext.Set<T>().AsQueryable();
+        }
+
         public virtual async Task<T> SaveAsync(T entity)
         {
             this.ThrowIfNull(entity, nameof(this.SaveAsync));

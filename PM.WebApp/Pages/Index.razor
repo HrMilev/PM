@@ -1,8 +1,6 @@
 ﻿@page "/"
 @inject IStringLocalizer<Localization> loc
 @inject IToDoRepository toDoRepository
-<h1>@loc["Hello"]</h1>
-Welcome to your new app.
 <CreateToDo></CreateToDo>
 <ListComponent T="ToDoRestModel" Elements="@toDos">
     <ChildContent Context="toDo">

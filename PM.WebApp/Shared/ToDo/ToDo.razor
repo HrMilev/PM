@@ -1,7 +1,9 @@
-﻿<div>
-    <div>@Model.StartDate</div>
-    <div>@Model.EndDate</div>
-    <div>@Model.Description</div>
+﻿<div class="card border border-dark mt-2">
+    <div class="card-body row">
+        <div class="card-subtitle col-6">@Model.StartDate</div>
+        <div class="card-subtitle col-6">@Model.EndDate</div>
+        <p class="card-text col-12">@Model.Description</p>
+    </div>
 </div>
 @code {
     [Parameter]

@@ -9,6 +9,7 @@ namespace PM.Data.Repositories.Bases.Interfaces
     {
         Task DeleteAsync(Func<T, bool> predicate);
         IEnumerable<T> GetAll(Func<T, bool> predicate);
+        IQueryable<T> GetQueryable();
         Task<T> SaveAsync(T entity);
     }
 }

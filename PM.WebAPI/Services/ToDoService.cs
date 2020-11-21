@@ -25,6 +25,12 @@ namespace PM.WebAPI.Services
             _httpContext = httpContext;
         }
 
+        public async Task<int> CountAsync()
+        {
+            var userId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return await _toDoRepository.GetQueryable().Where(x => x.UserId == userId).CountAsync();
+        }
+
         public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel)
         {
             var todo = _mapper.Map<ToDo>(toDoRestModel);

@@ -1,4 +1,5 @@
-﻿using PM.Data.Repositories.Bases.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using PM.Data.Repositories.Bases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,10 @@ namespace PM.Data.Repositories.Bases
             }
         }
 
-        public virtual IEnumerable<T> GetAll(Func<T, bool> predicate)
+        public virtual async Task<IList<T>> GetAll(Func<T, bool> predicate)
         {
-            return _dbContext.Set<T>().Where(predicate);
+            var a = _dbContext.Set<T>().Where(predicate).AsQueryable();
+            return await a.ToListAsync();
         }
 
         public virtual async Task DeleteAsync(Func<T, bool> predicate)

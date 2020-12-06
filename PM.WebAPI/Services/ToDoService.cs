@@ -16,33 +16,40 @@ namespace PM.WebAPI.Services
     {
         private readonly IToDoRepository _toDoRepository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContext;
 
-        public ToDoService(IToDoRepository toDoRepository, IMapper mapper, IHttpContextAccessor httpContext)
+        public ToDoService(IToDoRepository toDoRepository, IMapper mapper)
         {
             _toDoRepository = toDoRepository;
             _mapper = mapper;
-            _httpContext = httpContext;
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> CountAsync(string userId)
         {
-            var userId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return await _toDoRepository.GetQueryable().Where(x => x.UserId == userId).CountAsync();
         }
 
-        public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel)
+        public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel, string userId)
         {
             var todo = _mapper.Map<ToDo>(toDoRestModel);
-            todo.UserId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            todo.UserId = userId;
             todo = await _toDoRepository.SaveAsync(todo);
             return _mapper.Map<ToDoRestModel>(todo);
         }
 
-        public IList<ToDoRestModel> GetList()
+        public async Task<IList<ToDoRestModel>> GetList(string userId)
         {
-            var userId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var todos = _toDoRepository.GetAll(t => t.UserId == userId);
+            var todos = await _toDoRepository.GetAll(t => t.UserId == userId);
+            return _mapper.Map<IList<ToDoRestModel>>(todos);
+        }
+
+        public async Task<IList<ToDoRestModel>> GetPage(string userId, int page, int pageSize)
+        {
+            var todos = await _toDoRepository.GetQueryable()
+                .Where(x => x.UserId == userId)
+                .OrderBy(x => x.StartDate)
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .ToListAsync();
             return _mapper.Map<IList<ToDoRestModel>>(todos);
         }
     }

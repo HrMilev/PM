@@ -18,6 +18,10 @@ namespace PM.WebApp.Models
         public bool IsSuccess { get; }
         public T Response { get; }
         public HttpResponseMessage ResponseMessage { get; }
+        public IList<string> GetHeaderValues(string key)
+        {
+            return ResponseMessage?.Headers?.GetValues(key).ToList();
+        }
 
         public async Task<string> GetBodyAsync()
         {

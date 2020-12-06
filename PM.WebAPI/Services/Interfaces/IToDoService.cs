@@ -6,7 +6,8 @@ namespace PM.WebAPI.Services.Interfaces
 {
     public interface IToDoService : ICountableService
     {
-        Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel);
-        IList<ToDoRestModel> GetList();
+        Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel, string userId);
+        Task<IList<ToDoRestModel>> GetList(string userId);
+        Task<IList<ToDoRestModel>> GetPage(string userId, int page, int pageSize);
     }
 }

@@ -10,5 +10,6 @@ namespace PM.WebApp.Infrastructure.Utils.Interfaces
     {
         Task<HttpResponseWrapper<T>> GetAsync<T>(string url);
         Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data);
+        Task<HttpResponseWrapper<T>> GetPageableAsync<T>(string url, int page, int pageSize);
     }
 }

@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace PM.Common.Utils.Culture
 {
-    public class SupportedCulturesService
+    public class SupportedCulturesService : ISupportedCulturesService
     {
         public IList<string> Cultures { get; } = new List<string>
             {

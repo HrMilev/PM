@@ -1,6 +1,6 @@
 ﻿@using PM.Common.Utils.Culture
 @inject IConfiguration Configuration
-@inject SupportedCulturesService supportedCultureSelector
+@inject ISupportedCulturesService supportedCultureSelector
 
 @{
     var cultures = new SupportedCulturesService().Cultures;

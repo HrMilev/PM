@@ -17,7 +17,7 @@ namespace PM.WebApp.Infrastructure.Repositories
             _httpService = httpService;
         }
 
-        public async Task<IEnumerable<ToDoRestModel>> GetToDos()
+        public async Task<IEnumerable<ToDoRestModel>> GetToDosAsync()
         {
             var response = await _httpService.GetAsync<IEnumerable<ToDoRestModel>>(URL);
 
@@ -40,6 +40,20 @@ namespace PM.WebApp.Infrastructure.Repositories
             }
 
             return response.Response;
+        }
+
+        public async Task<(IEnumerable<ToDoRestModel>, int)> GetPageAsync(int page, int pageSize = 5)
+        {
+            var response = await _httpService.GetPageableAsync<IEnumerable<ToDoRestModel>>(URL, page, pageSize);
+
+            if (!response.IsSuccess)
+            {
+                throw new ApplicationException(await response.GetBodyAsync());
+            }
+
+            int.TryParse(response.GetHeaderValues("X-Pages")[0], out int pages);
+
+            return (response.Response, pages);
         }
     }
 }

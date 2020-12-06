@@ -1,26 +1,4 @@
 ﻿@page "/"
-@inject IStringLocalizer<Localization> loc
-@inject IToDoRepository toDoRepository
+
 <CreateToDo></CreateToDo>
-<ListComponent T="ToDoRestModel" Elements="@toDos">
-    <ChildContent Context="toDo">
-        <ToDo Model="toDo"></ToDo>
-    </ChildContent>
-</ListComponent>
-
-@code{
-    private IEnumerable<ToDoRestModel> toDos = new List<ToDoRestModel>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            toDos = await toDoRepository.GetToDos();
-        }
-        catch (Exception)
-        {
-
-
-        }
-    }
-}
+<ToDoPageableList></ToDoPageableList>

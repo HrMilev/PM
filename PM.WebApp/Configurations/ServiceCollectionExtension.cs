@@ -13,8 +13,9 @@ namespace PM.WebApp.Configurations
         {
             services.AddTransient<IHttpService, HttpService>();
             services.AddTransient<IToDoRepository, ToDoRepository>();
-            services.AddSingleton<SupportedCulturesService>();
-            services.AddSingleton<AlertService>();
+            services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
+            services.AddSingleton<IAlertService, AlertService>();
+            services.AddSingleton<IEventHandlerService, EventHandlerService>();
         }
     }
 }

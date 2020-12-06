@@ -1,6 +1,7 @@
 ﻿@inject IStringLocalizer<Localization> loc
 @inject IToDoRepository toDoRepository
-@inject AlertService alertService
+@inject IAlertService alertService
+@inject IEventHandlerService eventHandlerService
 <Collapsible>
     <TextFragment>
         <i class="icon-plus-sign"></i> @loc["Create ToDo"]
@@ -41,6 +42,7 @@
     private async Task CreateAsync()
     {
         var todo = await toDoRepository.CreateAsync(toDo);
-        alertService.PushMessage(PM.WebApp.Infrastructure.Utils.Enums.AlertMessageEnum.Success, loc["Created"] + todo.Id);
+        alertService.PushMessage(AlertMessageEnum.Success, loc["Created"]);
+        eventHandlerService.Raise(EventHandlerEnum.ToDoCreated);
     }
 }

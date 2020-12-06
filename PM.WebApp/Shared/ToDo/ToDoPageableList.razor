@@ -1,0 +1,33 @@
+﻿@inject IStringLocalizer<Localization> loc
+@inject IToDoRepository toDoRepository
+@inject IEventHandlerService eventHandlerService
+
+<ListComponent T="ToDoRestModel" Elements="@todoPage">
+    <ChildContent Context="toDo">
+        <ToDo Model="toDo"></ToDo>
+    </ChildContent>
+</ListComponent>
+
+@code {
+    private static int pageSize = 10;
+    private IEnumerable<ToDoRestModel> todoPage = new List<ToDoRestModel>();
+    private int pages = 0;
+    private int currentPage = 1;
+
+    private async void Update()
+    {
+        if (pages == currentPage)
+        {
+            (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+        eventHandlerService.Subscribe(EventHandlerEnum.ToDoCreated, Update);
+    }
+
+
+}

@@ -13,7 +13,7 @@ namespace PM.WebAPI.Configurations
         {
             services.AddTransient<IToDoRepository, ToDoRepository>();
             services.AddTransient<IToDoService, ToDoService>();
-            services.AddSingleton<SupportedCulturesService>();
+            services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
         }
     }
 }

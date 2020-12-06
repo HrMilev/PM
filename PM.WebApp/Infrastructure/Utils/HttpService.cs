@@ -1,4 +1,5 @@
-﻿using PM.WebApp.Infrastructure.Utils.Interfaces;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using PM.WebApp.Infrastructure.Utils.Interfaces;
 using PM.WebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,15 @@ namespace PM.WebApp.Infrastructure.Utils
             var content = new StringContent(jsonData, Encoding.UTF8, MediaTypeNames.Application.Json);
             var responseHTTP = await _httpClient.PostAsync(url, content);
             return await GetWrapper<TResponse>(responseHTTP);
+        }
+
+        public async Task<HttpResponseWrapper<T>> GetPageableAsync<T>(string url, int page, int pageSize)
+        {
+            var pageUrl = QueryHelpers.AddQueryString(url, nameof(page), page.ToString());
+            var request = new HttpRequestMessage(HttpMethod.Get, pageUrl);
+            request.Headers.Add("X-PageSize", pageSize.ToString());
+            var responseHTTP = await _httpClient.SendAsync(request);
+            return await GetWrapper<T>(responseHTTP);
         }
 
         private async Task<HttpResponseWrapper<T>> GetWrapper<T>(HttpResponseMessage httpResponseMessage)

@@ -1,4 +1,5 @@
 ﻿using PM.WebApp.Infrastructure.Utils.Enums;
+using PM.WebApp.Infrastructure.Utils.Interfaces;
 using PM.WebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PM.WebApp.Infrastructure.Utils
 {
-    public class AlertService
+    public class AlertService : IAlertService
     {
         public List<Alert> Alerts { get; }
         public event Func<Task> RequestRefresh;

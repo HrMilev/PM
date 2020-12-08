@@ -4,7 +4,7 @@
 
 <ListComponent T="ToDoRestModel" Elements="@todoPage">
     <ChildContent Context="toDo">
-        <ToDo Model="toDo"></ToDo>
+        <ToDo Model="toDo" IsDeleteOn="true" IsEditOn="true"></ToDo>
     </ChildContent>
 </ListComponent>
 
@@ -14,9 +14,9 @@
     private int pages = 0;
     private int currentPage = 1;
 
-    private async void Update()
+    private async Task Update()
     {
-        if (pages == currentPage)
+        if (pages == currentPage || pages == 0)
         {
             (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
             await InvokeAsync(StateHasChanged);
@@ -27,7 +27,6 @@
     {
         (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
         eventHandlerService.Subscribe(EventHandlerEnum.ToDoCreated, Update);
+        eventHandlerService.Subscribe(EventHandlerEnum.ToDoDeleted, Update);
     }
-
-
 }

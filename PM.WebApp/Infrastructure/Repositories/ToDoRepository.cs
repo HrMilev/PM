@@ -55,5 +55,12 @@ namespace PM.WebApp.Infrastructure.Repositories
 
             return (response.Response, pages);
         }
+
+        public async Task<string> DeleteAsync(string id)
+        {
+            string url = URL + $"/{id}";
+            var response = await _httpService.DeleteAsync<string>(url);
+            return response.Response;
+        }
     }
 }

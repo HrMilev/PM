@@ -17,12 +17,15 @@ namespace PM.WebApp.Infrastructure.Utils
             Alerts = new List<Alert>();
         }
 
-        public void PushMessage(AlertMessageEnum type, string message)
+        public void PushMessage(AlertMessageEnum type, string message, bool isAutoRemovable = true)
         {
             var alert = new Alert { Message = message, Type = type };
 
             Alerts.Add(alert);
-            Task.Run(Remove(alert));
+            if (isAutoRemovable)
+            {
+                Task.Run(Remove(alert));
+            }
 
             RequestRefresh?.Invoke();
         }

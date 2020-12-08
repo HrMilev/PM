@@ -12,6 +12,6 @@ namespace PM.WebApp.Infrastructure.Utils
 
         event Func<Task> RequestRefresh;
 
-        void PushMessage(AlertMessageEnum type, string message);
+        void PushMessage(AlertMessageEnum type, string message, bool isAutoRemovable = true);
     }
 }

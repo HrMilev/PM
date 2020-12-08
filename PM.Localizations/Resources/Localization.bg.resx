@@ -138,6 +138,9 @@
   <data name="Culture" xml:space="preserve">
     <value>Език</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Изтрито</value>
+  </data>
   <data name="Description is required" xml:space="preserve">
     <value>Описанието е задължително</value>
   </data>

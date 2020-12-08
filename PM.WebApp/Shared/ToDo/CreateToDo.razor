@@ -4,7 +4,7 @@
 @inject IEventHandlerService eventHandlerService
 <Collapsible>
     <TextFragment>
-        <i class="icon-plus-sign"></i> @loc["Create ToDo"]
+        <i class="fas fa-plus"></i> @loc["Create ToDo"]
     </TextFragment>
     <BodyFragment>
         <EditForm Model="toDo" OnValidSubmit="CreateAsync">
@@ -43,6 +43,6 @@
     {
         var todo = await toDoRepository.CreateAsync(toDo);
         alertService.PushMessage(AlertMessageEnum.Success, loc["Created"]);
-        eventHandlerService.Raise(EventHandlerEnum.ToDoCreated);
+        eventHandlerService.RaiseAsync(EventHandlerEnum.ToDoCreated);
     }
 }

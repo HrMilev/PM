@@ -43,5 +43,13 @@ namespace PM.WebAPI.Controllers
             var todo = await _toDoService.CreateAsync(toDoViewModel, User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return CreatedAtAction("GET", todo.Id, todo);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await _toDoService.DeleteAsync(Id, userId);
+            return Ok();
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace PM.WebAPI.Services.Interfaces
         Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel, string userId);
         Task<IList<ToDoRestModel>> GetList(string userId);
         Task<IList<ToDoRestModel>> GetPage(string userId, int page, int pageSize);
+        Task DeleteAsync(string id, string userId);
     }
 }

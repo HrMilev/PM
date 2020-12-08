@@ -7,6 +7,7 @@ namespace PM.WebApp.Infrastructure.Utils.Enums
 {
     public enum EventHandlerEnum
     {
-        ToDoCreated = 1
+        ToDoCreated = 1,
+        ToDoDeleted = 2
     }
 }

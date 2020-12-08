@@ -1,35 +1,36 @@
 ﻿using PM.WebApp.Infrastructure.Utils.Enums;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PM.WebApp.Infrastructure.Utils
 {
     public class EventHandlerService : IEventHandlerService
     {
-        private IDictionary<EventHandlerEnum, IList<Action>> _events;
+        private IDictionary<EventHandlerEnum, IList<Func<Task>>> _events;
 
         public EventHandlerService()
         {
-            _events = new Dictionary<EventHandlerEnum, IList<Action>>();
+            _events = new Dictionary<EventHandlerEnum, IList<Func<Task>>>();
         }
 
-        public void Subscribe(EventHandlerEnum @event, Action action)
+        public void Subscribe(EventHandlerEnum @event, Func<Task> asyncAction)
         {
             if (!_events.ContainsKey(@event))
             {
-                _events[@event] = new List<Action>();
+                _events[@event] = new List<Func<Task>>();
             }
 
-            _events[@event].Add(action);
+            _events[@event].Add(asyncAction);
         }
 
-        public void Raise(EventHandlerEnum @event)
+        public async void RaiseAsync(EventHandlerEnum @event)
         {
             if (_events.ContainsKey(@event))
             {
                 foreach (var action in _events[@event])
                 {
-                    action();
+                    await action();
                 }
             }
         }

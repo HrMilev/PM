@@ -50,6 +50,12 @@ namespace PM.WebApp.Infrastructure.Utils
             return await GetWrapper<T>(responseHTTP);
         }
 
+        public async Task<HttpResponseWrapper<T>> DeleteAsync<T>(string url)
+        {
+            var responseHTTP = await _httpClient.DeleteAsync(url);
+            return await GetWrapper<T>(responseHTTP);
+        }
+
         private async Task<HttpResponseWrapper<T>> GetWrapper<T>(HttpResponseMessage httpResponseMessage)
         {
             if (httpResponseMessage.IsSuccessStatusCode)
@@ -67,7 +73,7 @@ namespace PM.WebApp.Infrastructure.Utils
         private async Task<T> Deserialize<T>(HttpResponseMessage message, JsonSerializerOptions options)
         {
             var responseAsString = await message.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(responseAsString, options);
+            return string.IsNullOrEmpty(responseAsString) ? default(T) : JsonSerializer.Deserialize<T>(responseAsString, options);
         }
     }
 }

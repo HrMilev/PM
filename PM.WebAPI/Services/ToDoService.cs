@@ -36,6 +36,11 @@ namespace PM.WebAPI.Services
             return _mapper.Map<ToDoRestModel>(todo);
         }
 
+        public async Task DeleteAsync(string id, string userId)
+        {
+            await _toDoRepository.DeleteAsync(x => x.UserId == userId && x.Id.ToString() == id);
+        }
+
         public async Task<IList<ToDoRestModel>> GetList(string userId)
         {
             var todos = await _toDoRepository.GetAll(t => t.UserId == userId);

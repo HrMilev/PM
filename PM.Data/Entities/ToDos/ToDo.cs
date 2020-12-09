@@ -4,7 +4,7 @@ using System;
 
 namespace PM.Data.Entities.ToDos
 {
-    public class ToDo : IdBase
+    public class ToDo : IdBase<Guid>
     {
         public string Description { get; set; }
         public DateTime EndDate { get; set; }

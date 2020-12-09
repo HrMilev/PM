@@ -17,6 +17,20 @@ namespace PM.WebApp.Infrastructure.Repositories
             _httpService = httpService;
         }
 
+        public async Task<ToDoRestModel> UpdateAsync(ToDoRestModel toDo)
+        {
+            var uri = $"{URL}/{toDo.Id}";
+            var response = await _httpService.UpdateAsync(uri, toDo);
+
+
+            if (!response.IsSuccess)
+            {
+                throw new ApplicationException(await response.GetBodyAsync());
+            }
+
+            return response.Response;
+        }
+
         public async Task<IEnumerable<ToDoRestModel>> GetToDosAsync()
         {
             var response = await _httpService.GetAsync<IEnumerable<ToDoRestModel>>(URL);

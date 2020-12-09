@@ -12,5 +12,6 @@ namespace PM.WebApp.Infrastructure.Utils.Interfaces
         Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data);
         Task<HttpResponseWrapper<T>> GetPageableAsync<T>(string url, int page, int pageSize);
         Task<HttpResponseWrapper<T>> DeleteAsync<T>(string url);
+        Task<HttpResponseWrapper<T>> UpdateAsync<T>(string url, T entity);
     }
 }

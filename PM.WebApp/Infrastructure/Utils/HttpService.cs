@@ -27,6 +27,14 @@ namespace PM.WebApp.Infrastructure.Utils
             _httpClient = httpClient;
         }
 
+        public async Task<HttpResponseWrapper<T>> UpdateAsync<T>(string url, T entity)
+        {
+            var jsonData = JsonSerializer.Serialize(entity);
+            var content = new StringContent(jsonData, Encoding.UTF8, MediaTypeNames.Application.Json);
+            var responseHTTP = await _httpClient.PutAsync(url, content);
+            return await GetWrapper<T>(responseHTTP);
+        }
+
         public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url)
         {
             var responseHTTP = await _httpClient.GetAsync(url);

@@ -144,6 +144,12 @@
   <data name="Description is required" xml:space="preserve">
     <value>Description is required</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>Edited</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>

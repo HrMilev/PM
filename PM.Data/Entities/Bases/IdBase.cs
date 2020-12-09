@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PM.Data.Entities.Bases
 {
-    public class IdBase
+    public class IdBase<T>
     {
-        public Guid Id { get; set; }
+        public T Id { get; set; }
     }
 }

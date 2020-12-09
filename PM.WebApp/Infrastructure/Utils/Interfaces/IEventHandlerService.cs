@@ -6,7 +6,7 @@ namespace PM.WebApp.Infrastructure.Utils
 {
     public interface IEventHandlerService
     {
+        event Func<SimpleEventArgs, Task> OnNotify;
         void RaiseAsync(EventHandlerEnum @event);
-        void Subscribe(EventHandlerEnum @event, Func<Task> asyncAction);
     }
 }

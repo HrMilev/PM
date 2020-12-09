@@ -1,0 +1,34 @@
+﻿@inject IStringLocalizer<Localization> loc
+
+<EditForm Model="ToDo" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="toDoDescription">@loc["Task"]</label>
+        <InputTextArea class="form-control border-dark"
+                       id="toDoDescription"
+                       rows="3"
+                       @bind-Value="@ToDo.Description">
+        </InputTextArea>
+        <ValidationMessage For="@(() => ToDo.Description)" />
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="toDoStartDate">@loc["Start at"]</label>
+            <InputDateTime @bind-Value="@ToDo.StartDate" id="toDoStartDate" class="form-control border-dark"></InputDateTime>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="toDoEndDate">@loc["End at"]</label>
+            <InputDateTime @bind-Value="@ToDo.EndDate" id="toDoEndDate" class="form-control border-dark"></InputDateTime>
+        </div>
+    </div>
+    <button class="btn btn-warning" type="submit">@SubmitButtonText</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public ToDoRestModel ToDo { get; set; }
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+    [Parameter]
+    public string SubmitButtonText { get; set; }
+}

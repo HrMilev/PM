@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PM.Data.Entities.ToDos;
 using PM.Data.EntityConfigurations.BaseConfigurations;
+using System;
 
 namespace PM.Data.EntityConfigurations.ToDoConfigurations
 {
-    public class ToDoEntityConfiguration : IdBaseEntityConfiguration<ToDo>
+    public class ToDoEntityConfiguration : IdBaseEntityConfiguration<ToDo, Guid>
     {
         public override void Configure(EntityTypeBuilder<ToDo> builder)
         {

@@ -144,6 +144,12 @@
   <data name="Description is required" xml:space="preserve">
     <value>Описанието е задължително</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактирай</value>
+  </data>
+  <data name="Edited" xml:space="preserve">
+    <value>Редактирано</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Е-поща</value>
   </data>

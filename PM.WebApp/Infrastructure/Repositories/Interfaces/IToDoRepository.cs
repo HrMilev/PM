@@ -12,5 +12,6 @@ namespace PM.WebApp.Infrastructure.Repositories.Interfaces
         Task<IEnumerable<ToDoRestModel>> GetToDosAsync();
         Task<(IEnumerable<ToDoRestModel>, int)> GetPageAsync(int page, int pageSize = 5);
         Task<string> DeleteAsync(string id);
+        Task<ToDoRestModel> UpdateAsync(ToDoRestModel toDo);
     }
 }

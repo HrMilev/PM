@@ -1,10 +1,11 @@
-﻿@inject IStringLocalizer<Localization> loc
+﻿@implements IDisposable
+@inject IStringLocalizer<Localization> loc
 @inject IToDoRepository toDoRepository
 @inject IEventHandlerService eventHandlerService
 
 <ListComponent T="ToDoRestModel" Elements="@todoPage">
     <ChildContent Context="toDo">
-        <ToDo Model="toDo" IsDeleteOn="true" IsEditOn="true"></ToDo>
+        <ToDoCard Model="toDo" IsDeleteOn="true" IsEditOn="true"></ToDoCard>
     </ChildContent>
 </ListComponent>
 
@@ -14,9 +15,11 @@
     private int pages = 0;
     private int currentPage = 1;
 
-    private async Task Update()
+    private async Task Update(SimpleEventArgs args)
     {
-        if (pages == currentPage || pages == 0)
+        if ((args != null && args.IsOfType(EventHandlerEnum.ToDoDeleted, EventHandlerEnum.ToDoCreated))
+            || pages == currentPage
+            || pages == 0)
         {
             (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
             await InvokeAsync(StateHasChanged);
@@ -25,8 +28,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        eventHandlerService.OnNotify -= Update;
+        eventHandlerService.OnNotify += Update;
         (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
-        eventHandlerService.Subscribe(EventHandlerEnum.ToDoCreated, Update);
-        eventHandlerService.Subscribe(EventHandlerEnum.ToDoDeleted, Update);
+    }
+
+    public void Dispose()
+    {
+        eventHandlerService.OnNotify -= Update;
     }
 }

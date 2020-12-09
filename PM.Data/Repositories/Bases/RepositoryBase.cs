@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using PM.Data.Entities.Bases;
 using PM.Data.Repositories.Bases.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,22 @@ namespace PM.Data.Repositories.Bases
             return _dbContext.Set<T>().AsQueryable();
         }
 
+        public virtual async Task<T> UpdateAsync(T entity)
+        {
+            this.ThrowIfNull(entity, nameof(this.UpdateAsync));
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{typeof(T).Name} {nameof(this.UpdateAsync)} failed: {ex.InnerException}");
+            }
+        }
+
         public virtual async Task<T> SaveAsync(T entity)
         {
             this.ThrowIfNull(entity, nameof(this.SaveAsync));
@@ -38,10 +56,15 @@ namespace PM.Data.Repositories.Bases
             }
         }
 
+        public virtual async Task<T> Get<Tid>(Tid id)
+        {
+            return await _dbContext.FindAsync<T>(id);
+        }
+
         public virtual async Task<IList<T>> GetAll(Func<T, bool> predicate)
         {
-            var a = _dbContext.Set<T>().Where(predicate).AsQueryable();
-            return await a.ToListAsync();
+            var queryable = _dbContext.Set<T>().Where(predicate).AsQueryable();
+            return await queryable.ToListAsync();
         }
 
         public virtual async Task DeleteAsync(Func<T, bool> predicate)

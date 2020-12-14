@@ -13,7 +13,7 @@ namespace PM.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ContactUsController : ControllerBase
     {
         private readonly IConfiguration _configuration;

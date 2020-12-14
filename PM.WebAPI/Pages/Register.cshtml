@@ -42,7 +42,7 @@
 @section Scripts {
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('@Configuration["googleReCaptcha:SiteKey"]').then(function (token) {
+            grecaptcha.execute('@Configuration["GoogleReCaptcha:SiteKey"]').then(function (token) {
                 document.getElementById("captchaInput").value = token;
             });
         });

@@ -22,5 +22,10 @@
         var todo = await toDoRepository.CreateAsync(toDo);
         alertService.PushMessage(AlertMessageEnum.Success, loc["Created"]);
         eventHandlerService.RaiseAsync(EventHandlerEnum.ToDoCreated);
+        toDo = new ToDoRestModel
+        {
+            StartDate = DateTime.Now,
+            EndDate = DateTime.Now.AddHours(1)
+        };
     }
 }

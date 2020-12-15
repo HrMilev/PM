@@ -13,6 +13,9 @@ namespace PM.WebAPI.Configurations
         {
             services.AddTransient<IToDoRepository, ToDoRepository>();
             services.AddTransient<IToDoService, ToDoService>();
+            services.AddTransient<IContactUsFormRepository, ContactUsFormRepository>();
+            services.AddTransient<IContactUsFormService, ContactUsFormService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
             services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
         }
     }

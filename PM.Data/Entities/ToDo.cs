@@ -1,8 +1,7 @@
 ﻿using PM.Data.Entities.Bases;
-using PM.Data.Entities.Users;
 using System;
 
-namespace PM.Data.Entities.ToDos
+namespace PM.Data.Entities
 {
     public class ToDo : IdBase<Guid>
     {

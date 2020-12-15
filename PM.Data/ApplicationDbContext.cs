@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
-using PM.Data.Entities.ToDos;
-using PM.Data.Entities.Users;
+using PM.Data.Entities;
 
 namespace PM.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<ContactUsForm> ContactUsForms { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,

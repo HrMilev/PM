@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PM.Data.Entities.ToDos;
+using PM.Data.Entities;
 using PM.Data.EntityConfigurations.BaseConfigurations;
 using System;
 
-namespace PM.Data.EntityConfigurations.ToDoConfigurations
+namespace PM.Data.EntityConfigurations
 {
     public class ToDoEntityConfiguration : IdBaseEntityConfiguration<ToDo, Guid>
     {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PM.Data;
 
 namespace PM.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201214223911_AddContactUsTable")]
+    partial class AddContactUsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +259,73 @@ namespace PM.WebAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PM.Data.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("PM.Data.Entities.ContactUs.ContactUsForm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponderMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserCreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserResponderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserCreatorId");
+
+                    b.HasIndex("UserResponderId");
+
+                    b.ToTable("ContactUsForms");
+                });
+
+            modelBuilder.Entity("PM.Data.Entities.ToDos.ToDo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ToDos");
+                });
+
+            modelBuilder.Entity("PM.Data.Entities.Users.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -322,78 +390,6 @@ namespace PM.WebAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("PM.Data.Entities.ContactUsForm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorMessage")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponderMessage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("UserCreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserResponderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserCreatorId");
-
-                    b.HasIndex("UserResponderId");
-
-                    b.ToTable("ContactUsForms");
-                });
-
-            modelBuilder.Entity("PM.Data.Entities.ToDo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ToDos");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -405,7 +401,7 @@ namespace PM.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PM.Data.Entities.ApplicationUser", null)
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -414,7 +410,7 @@ namespace PM.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PM.Data.Entities.ApplicationUser", null)
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -429,7 +425,7 @@ namespace PM.WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PM.Data.Entities.ApplicationUser", null)
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -438,22 +434,22 @@ namespace PM.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PM.Data.Entities.ApplicationUser", null)
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PM.Data.Entities.ContactUsForm", b =>
+            modelBuilder.Entity("PM.Data.Entities.ContactUs.ContactUsForm", b =>
                 {
-                    b.HasOne("PM.Data.Entities.ApplicationUser", "UserCreator")
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", "UserCreator")
                         .WithMany("ContactUsForms")
                         .HasForeignKey("UserCreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PM.Data.Entities.ApplicationUser", "UserResponder")
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", "UserResponder")
                         .WithMany("ContactUsResponses")
                         .HasForeignKey("UserResponderId");
 
@@ -462,9 +458,9 @@ namespace PM.WebAPI.Migrations
                     b.Navigation("UserResponder");
                 });
 
-            modelBuilder.Entity("PM.Data.Entities.ToDo", b =>
+            modelBuilder.Entity("PM.Data.Entities.ToDos.ToDo", b =>
                 {
-                    b.HasOne("PM.Data.Entities.ApplicationUser", "User")
+                    b.HasOne("PM.Data.Entities.Users.ApplicationUser", "User")
                         .WithMany("ToDos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -473,7 +469,7 @@ namespace PM.WebAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PM.Data.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("PM.Data.Entities.Users.ApplicationUser", b =>
                 {
                     b.Navigation("ContactUsForms");
 

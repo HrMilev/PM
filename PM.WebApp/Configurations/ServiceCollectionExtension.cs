@@ -13,6 +13,7 @@ namespace PM.WebApp.Configurations
         {
             services.AddTransient<IHttpService, HttpService>();
             services.AddTransient<IToDoRepository, ToDoRepository>();
+            services.AddTransient<IContactUsFormRepository, ContactUsFormRepository>();
             services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<IEventHandlerService, EventHandlerService>();

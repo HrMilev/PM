@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PM.Common.Models.Rest;
-using PM.Data.Entities.ToDos;
+using PM.Data.Entities;
 using PM.Data.Repositories.Interfaces;
 using PM.WebAPI.Services.Interfaces;
 using System;
@@ -44,6 +44,7 @@ namespace PM.WebAPI.Services
         {
             var todo = _mapper.Map<ToDo>(toDoRestModel);
             todo.UserId = userId;
+            todo.CreateDate = DateTime.UtcNow;
             todo = await _toDoRepository.SaveAsync(todo);
             return _mapper.Map<ToDoRestModel>(todo);
         }

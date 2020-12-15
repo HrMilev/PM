@@ -1,5 +1,5 @@
 ﻿using PM.Data;
-using PM.Data.Entities.ToDos;
+using PM.Data.Entities;
 using PM.Data.Repositories.Bases;
 using PM.Data.Repositories.Interfaces;
 

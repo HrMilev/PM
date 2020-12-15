@@ -14,8 +14,9 @@ using PM.WebAPI.Middlewares;
 using PM.WebAPI.Configurations;
 using AutoMapper;
 using PM.Data;
-using PM.Data.Entities.Users;
 using System.Text.Json;
+using PM.WebAPI.Extensions;
+using PM.Data.Entities;
 
 namespace PM.WebAPI
 {
@@ -34,6 +35,7 @@ namespace PM.WebAPI
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("PM.WebAPI")));
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddDefaultIdentity<ApplicationUser>()
@@ -71,14 +73,17 @@ namespace PM.WebAPI
                 opts.ResourcesPath = "Resources";
             });
             services.AddPMServices();
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.EnsureMigrationOf<ApplicationDbContext>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
             }
             else

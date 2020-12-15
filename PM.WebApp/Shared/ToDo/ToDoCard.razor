@@ -42,7 +42,7 @@
 
     private bool IsEditMode = false;
 
-    public async void OnDelete()
+    public async Task OnDelete()
     {
         var result = await toDoRepository.DeleteAsync(Model.Id);
         alertService.PushMessage(AlertMessageEnum.Success, loc["Deleted"]);

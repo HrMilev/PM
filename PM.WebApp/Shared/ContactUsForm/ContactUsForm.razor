@@ -1,0 +1,60 @@
+﻿@inject IStringLocalizer<Localization> loc
+@inject IContactUsFormRepository contactUsFormRepository
+@inject IAlertService alertService
+
+<EditForm Model="contactUsFormModel" OnValidSubmit="SendAsync">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="ContactUsSubject">@loc["Subject"]</label>
+        <InputText class="form-control border-dark"
+                   id="ContactUsSubject"
+                   rows="3"
+                   @bind-Value="@contactUsFormModel.Subject">
+        </InputText>
+        <ValidationMessage For="@(() => contactUsFormModel.Subject)" />
+    </div>
+    <div class="form-group">
+        <label for="ContactUsMessage">@loc["Message"]</label>
+        <InputTextArea class="form-control border-dark"
+                       id="ContactUsMessage"
+                       rows="3"
+                       @bind-Value="@contactUsFormModel.CreatorMessage">
+        </InputTextArea>
+        <ValidationMessage For="@(() => contactUsFormModel.CreatorMessage)" />
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" disabled="@isSubmiting" type="submit">@loc["Send"]</button>
+    </div>
+</EditForm>
+
+@code {
+    bool isSubmiting;
+
+    private ContactUsFormRestModel contactUsFormModel = new ContactUsFormRestModel();
+
+    private async Task SendAsync()
+    {
+        if (isSubmiting)
+        {
+            return;
+        }
+        isSubmiting = true;
+        try
+        {
+            var isCreated = await contactUsFormRepository.CreateAsync(contactUsFormModel);
+            if (isCreated)
+            {
+                contactUsFormModel = new ContactUsFormRestModel();
+                alertService.PushMessage(AlertMessageEnum.Success, loc["Sent"]);
+            }
+            else
+            {
+                alertService.PushMessage(AlertMessageEnum.Danger, loc["Something went wrong"]);
+            }
+        }
+        finally
+        {
+            isSubmiting = false;
+        }
+    }
+}

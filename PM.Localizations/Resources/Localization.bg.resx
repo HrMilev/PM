@@ -165,6 +165,9 @@
   <data name="Hello" xml:space="preserve">
     <value>Здравей</value>
   </data>
+  <data name="How can we help?" xml:space="preserve">
+    <value>Как можем да помогнем?</value>
+  </data>
   <data name="Invalid login attempt" xml:space="preserve">
     <value>Невалиден опит за вход</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Log out" xml:space="preserve">
     <value>Изход</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Съобщение</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Парола</value>
@@ -189,8 +195,17 @@
   <data name="Remember me" xml:space="preserve">
     <value>Запомни ме</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Изпрати</value>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Изпратено</value>
+  </data>
   <data name="Start at" xml:space="preserve">
     <value>Начало</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
   </data>
   <data name="Task" xml:space="preserve">
     <value>Задача</value>

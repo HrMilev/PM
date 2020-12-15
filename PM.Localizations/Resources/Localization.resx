@@ -165,6 +165,9 @@
   <data name="Hello" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="How can we help?" xml:space="preserve">
+    <value>How can we help?</value>
+  </data>
   <data name="Invalid login attempt" xml:space="preserve">
     <value>Invalid login attempt</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Log out" xml:space="preserve">
     <value>Log out</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -189,8 +195,17 @@
   <data name="Remember me" xml:space="preserve">
     <value>Remember me</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Sent</value>
+  </data>
   <data name="Start at" xml:space="preserve">
     <value>Start at</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
   </data>
   <data name="Task" xml:space="preserve">
     <value>Task</value>

@@ -43,6 +43,7 @@ namespace PM.WebApp
             builder.Services.AddApiAuthorization(o =>
             {
                 o.AuthenticationPaths.LogOutSucceededPath = "/";
+                o.UserOptions.RoleClaim = "role";
             });
 
             builder.Services.AddLocalization(opts =>

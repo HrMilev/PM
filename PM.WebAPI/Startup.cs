@@ -17,6 +17,7 @@ using PM.Data;
 using System.Text.Json;
 using PM.WebAPI.Extensions;
 using PM.Data.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace PM.WebAPI
 {
@@ -39,18 +40,22 @@ namespace PM.WebAPI
             services.AddAutoMapper(typeof(Startup));
 
             services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddErrorDescriber<MultilanguageIdentityErrorDescriber>();
 
             services.AddIdentityServer(o =>
-            {
-                o.UserInteraction.LoginUrl = "/Login";
-            })
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                {
+                    o.UserInteraction.LoginUrl = "/Login";
+                })
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(o =>
+                {
+                    o.IdentityResources["openid"].UserClaims.Add("role");
+                });
             services.AddHttpContextAccessor();
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
             services.AddControllersWithViews()
                 .AddDataAnnotationsLocalization(o =>
                 {
@@ -79,7 +84,6 @@ namespace PM.WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.EnsureMigrationOf<ApplicationDbContext>();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,6 +105,7 @@ namespace PM.WebAPI
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.SeedAdmin();
             app.UseGrpcWeb();
 
             app.UseMiddleware<CultureMiddleware>();

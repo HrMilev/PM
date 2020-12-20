@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace PM.WebAPI.Automapper.Profiles
 {
-    public class ContactUsFormProfile : Profile
+    public class UserQuestionProfile : Profile
     {
-        public ContactUsFormProfile()
+        public UserQuestionProfile()
         {
-            CreateMap<ContactUsFormRestModel, ContactUsForm>();
-            CreateMap<ContactUsForm, ContactUsFormRestModel>();
+            CreateMap<UserQuestionRestModel, UserQuestion>();
+            CreateMap<UserQuestion, UserQuestionRestModel>();
         }
     }
 }

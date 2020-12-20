@@ -1,0 +1,79 @@
+﻿@inject IUserQuestionRepository userQuestionRepository
+@inject IAlertService alertService
+@inject IStringLocalizer<Localization> loc
+@inject IEventHandlerService eventHandlerService
+<div class="card border border-dark mt-2">
+    <div class="card-body">
+        <div class="card-subtitle row">
+            <div class="col col-10">@Model.CreateDate</div>
+            <button type="button" @onclick="OnReply" class="col btn btn-warning btn-block p-2 m-1">
+                <i class="fas fa-reply"></i>
+            </button>
+            <button type="button" @onclick="OnDelete" class="col btn btn-danger btn-block p-2 m-1">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+        <p class="card-text">@Model.CreatorMessage</p>
+        @if (IsReplyMode)
+        {
+            <Close OnClick="() => IsReplyMode = false"></Close>
+            <EditForm Model="Model" OnValidSubmit="UpdateAsync">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="ContactUsMessage">@loc["Message"]</label>
+                    <InputTextArea class="form-control border-dark"
+                                   id="ContactUsMessage"
+                                   rows="3"
+                                   @bind-Value="@Model.ResponderMessage">
+                    </InputTextArea>
+                    <ValidationMessage For="@(() => Model.ResponderMessage)" />
+                </div>
+                <button class="btn btn-warning" disabled="@isSubmiting" type="submit">@loc["Send"]</button>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public UserQuestionRestModel Model { get; set; }
+
+    private bool IsReplyMode = false;
+    private bool isSubmiting;
+
+    public async Task OnDelete()
+    {
+        if (Model.Id.HasValue)
+        {
+            var result = await userQuestionRepository.DeleteAsync(Model.Id.Value);
+            alertService.PushMessage(AlertMessageEnum.Success, loc["Deleted"]);
+            eventHandlerService.RaiseAsync(EventHandlerEnum.UserQuestionDeleted);
+        }
+    }
+
+    public void OnReply()
+    {
+        IsReplyMode = true;
+    }
+
+    private async Task UpdateAsync()
+    {
+        if (isSubmiting)
+        {
+            return;
+        }
+        isSubmiting = true;
+        try
+        {
+
+            var todo = await userQuestionRepository.UpdateAsync(Model);
+            alertService.PushMessage(AlertMessageEnum.Success, loc["Sent"]);
+            eventHandlerService.RaiseAsync(EventHandlerEnum.UserQuestionReplied);
+            IsReplyMode = false;
+        }
+        finally
+        {
+            isSubmiting = false;
+        }
+    }
+}

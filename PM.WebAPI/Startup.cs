@@ -18,6 +18,9 @@ using System.Text.Json;
 using PM.WebAPI.Extensions;
 using PM.Data.Entities;
 using System.IdentityModel.Tokens.Jwt;
+using PM.WebAPI.Services;
+using IdentityServer4.Models;
+using System.Linq;
 
 namespace PM.WebAPI
 {
@@ -47,10 +50,13 @@ namespace PM.WebAPI
             services.AddIdentityServer(o =>
                 {
                     o.UserInteraction.LoginUrl = "/Login";
-                })
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(o =>
+                }).AddProfileService<ProfileService>()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
-                    o.IdentityResources["openid"].UserClaims.Add("role");
+                    options.IdentityResources["openid"].UserClaims.Add("name");
+                    options.ApiResources.Single().UserClaims.Add("name");
+                    options.IdentityResources["openid"].UserClaims.Add("role");
+                    options.ApiResources.Single().UserClaims.Add("role");
                 });
             services.AddHttpContextAccessor();
             services.AddAuthentication()
@@ -115,7 +121,6 @@ namespace PM.WebAPI
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
-                endpoints.MapGrpcService<GreeterService>().EnableGrpcWeb();
                 endpoints.MapFallbackToFile("index.html");
             });
         }

@@ -9,6 +9,8 @@ namespace PM.WebApp.Infrastructure.Utils.Enums
     {
         ToDoCreated = 1,
         ToDoDeleted = 2,
-        ToDoEdited = 3
+        ToDoEdited = 3,
+        UserQuestionDeleted = 4,
+        UserQuestionReplied = 5
     }
 }

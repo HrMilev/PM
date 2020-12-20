@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using PM.Data.Entities.Bases;
 using PM.Data.Repositories.Bases.Interfaces;
 using System;
 using System.Collections.Generic;

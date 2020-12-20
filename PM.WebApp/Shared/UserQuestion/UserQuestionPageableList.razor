@@ -1,21 +1,21 @@
 ﻿@implements IDisposable
 @inject IStringLocalizer<Localization> loc
-@inject IToDoRepository toDoRepository
+@inject IUserQuestionRepository userQuestionRepository
 @inject IEventHandlerService eventHandlerService
 
-<ListComponent T="ToDoRestModel" Elements="@todoPage">
-    <ChildContent Context="toDo">
-        <ToDoCard Model="toDo" IsDeleteOn="true" IsEditOn="true"></ToDoCard>
+<ListComponent T="UserQuestionRestModel" Elements="@userQuestionPage">
+    <ChildContent Context="userQuestion">
+        <UserQuestionCard Model="userQuestion"></UserQuestionCard>
     </ChildContent>
 </ListComponent>
-<PaginationFooter CurrentPageEntitiesCount="todoPage.Count()"
+<PaginationFooter CurrentPageEntitiesCount="userQuestionPage.Count()"
                   Pages="pages"
                   CurrentPage="currentPage"
                   GetPreviousPage="GetPreviousPage"
                   GetNextPage="GetNextPage"></PaginationFooter>
 @code {
     private static int pageSize = 3;
-    private IEnumerable<ToDoRestModel> todoPage = new List<ToDoRestModel>();
+    private IEnumerable<UserQuestionRestModel> userQuestionPage = new List<UserQuestionRestModel>();
     private int pages = 0;
     private int currentPage = 1;
 
@@ -24,7 +24,7 @@
         if (currentPage > 1)
         {
             currentPage--;
-            (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+            (userQuestionPage, pages) = await userQuestionRepository.GetPageAsync(currentPage, pageSize);
         }
     }
 
@@ -33,25 +33,25 @@
         if (currentPage < pages)
         {
             currentPage++;
-            (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+            (userQuestionPage, pages) = await userQuestionRepository.GetPageAsync(currentPage, pageSize);
         }
     }
 
     private async Task Update(SimpleEventArgs args)
     {
-        if ((args != null && args.IsOfType(EventHandlerEnum.ToDoDeleted, EventHandlerEnum.ToDoCreated))
+        if ((args != null && args.IsOfType(EventHandlerEnum.UserQuestionDeleted, EventHandlerEnum.UserQuestionReplied))
             || pages == currentPage
             || pages == 0)
         {
             if (currentPage == pages
-                && todoPage.Count() == 1
-                && args.IsOfType(EventHandlerEnum.ToDoDeleted)
+                && userQuestionPage.Count() == 1
+                && args.IsOfType(EventHandlerEnum.UserQuestionDeleted, EventHandlerEnum.UserQuestionReplied)
                 && currentPage != 1)
             {
                 currentPage--;
             }
 
-            (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+            (userQuestionPage, pages) = await userQuestionRepository.GetPageAsync(currentPage, pageSize);
             await InvokeAsync(StateHasChanged);
         }
     }
@@ -60,7 +60,7 @@
     {
         eventHandlerService.OnNotify -= Update;
         eventHandlerService.OnNotify += Update;
-        (todoPage, pages) = await toDoRepository.GetPageAsync(currentPage, pageSize);
+        (userQuestionPage, pages) = await userQuestionRepository.GetPageAsync(currentPage, pageSize);
     }
 
     public void Dispose()

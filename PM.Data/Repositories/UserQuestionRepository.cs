@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace PM.Data.Repositories
 {
-    public class ContactUsFormRepository : RepositoryBase<ContactUsForm>, IContactUsFormRepository
+    public class UserQuestionRepository : RepositoryBase<UserQuestion>, IUserQuestionRepository
     {
-        public ContactUsFormRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public UserQuestionRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
 
         }

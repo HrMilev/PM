@@ -1,6 +1,6 @@
 ﻿@inject IStringLocalizer<Localization> loc
 
-<EditForm Model="ToDo" OnValidSubmit="OnValidSubmit">
+<EditForm Model="ToDo" OnValidSubmit="OnValidSubmitting">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="toDoDescription">@loc["Task"]</label>
@@ -21,7 +21,7 @@
             <InputDateTime @bind-Value="@ToDo.EndDate" id="toDoEndDate" class="form-control border-dark"></InputDateTime>
         </div>
     </div>
-    <button class="btn btn-warning" type="submit">@SubmitButtonText</button>
+    <button class="btn btn-warning" disabled="@isSubmiting" type="submit">@SubmitButtonText</button>
 </EditForm>
 
 @code {
@@ -31,4 +31,24 @@
     public EventCallback OnValidSubmit { get; set; }
     [Parameter]
     public string SubmitButtonText { get; set; }
+
+    private bool isSubmiting;
+
+    private async Task OnValidSubmitting()
+    {
+        if (isSubmiting)
+        {
+            return;
+        }
+        isSubmiting = true;
+        try
+        {
+
+            await OnValidSubmit.InvokeAsync();
+        }
+        finally
+        {
+            isSubmiting = false;
+        }
+    }
 }

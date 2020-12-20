@@ -3,7 +3,7 @@ using System;
 
 namespace PM.Data.Entities
 {
-    public class ContactUsForm : IdBase<int>
+    public class UserQuestion : IdBase<int>
     {
         public string Subject { get; set; }
         public string CreatorMessage { get; set; }

@@ -15,9 +15,4 @@
     <ProjectReference Include="..\PM.Core\PM.Common.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Paginations\" />
-  </ItemGroup>
-
 </Project>

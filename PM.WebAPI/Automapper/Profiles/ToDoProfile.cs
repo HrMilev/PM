@@ -13,8 +13,8 @@ namespace PM.WebAPI.Automapper.Profiles
         {
             CreateMap<ToDo, ToDoRestModel>();
             CreateMap<ToDoRestModel, ToDo>()
-                .ForMember(x => x.StartDate, y => y.MapFrom(z => z.StartDate.ToUniversalTime()))
-                .ForMember(x => x.EndDate, y => y.MapFrom(z => z.EndDate.ToUniversalTime()));
+                .ForMember(x => x.StartDate, y => y.MapFrom(z => z.StartDate.Value.ToUniversalTime()))
+                .ForMember(x => x.EndDate, y => y.MapFrom(z => z.EndDate.Value.ToUniversalTime()));
         }
     }
 }

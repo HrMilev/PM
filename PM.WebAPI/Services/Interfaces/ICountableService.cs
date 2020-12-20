@@ -7,6 +7,6 @@ namespace PM.WebAPI.Services.Interfaces
 {
     public interface ICountableService
     {
-        Task<int> CountAsync(string userId);
+        Task<int> CountAsync(string userId = null);
     }
 }

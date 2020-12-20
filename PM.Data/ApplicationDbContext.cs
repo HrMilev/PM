@@ -10,7 +10,7 @@ namespace PM.Data
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<ToDo> ToDos { get; set; }
-        public DbSet<ContactUsForm> ContactUsForms { get; set; }
+        public DbSet<UserQuestion> UserQuestions { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,

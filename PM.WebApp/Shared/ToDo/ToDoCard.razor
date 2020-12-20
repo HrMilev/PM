@@ -3,11 +3,9 @@
 @inject IStringLocalizer<Localization> loc
 @inject IEventHandlerService eventHandlerService
 <div class="card border border-dark mt-2">
-    @if (IsEditMode)
+    @if (isEditMode)
     {
-        <div class="container-fluid p-1">
-            <div class="float-right pr-1" @onclick="@(() => IsEditMode = false)"><i class="fas fa-window-close"></i></div>
-        </div>
+        <Close OnClick="() => isEditMode = false"></Close>
         <div class="card-body">
             <div class="card-subtitle">
                 <ToDoForm ToDo="Model" OnValidSubmit="UpdateAsync" SubmitButtonText="@loc["Edit"]"></ToDoForm>
@@ -40,7 +38,7 @@
     [Parameter]
     public bool IsEditOn { get; set; }
 
-    private bool IsEditMode = false;
+    private bool isEditMode = false;
 
     public async Task OnDelete()
     {
@@ -51,7 +49,7 @@
 
     public void OnEdit()
     {
-        IsEditMode = true;
+        isEditMode = true;
     }
 
 
@@ -60,6 +58,6 @@
         var todo = await toDoRepository.UpdateAsync(Model);
         alertService.PushMessage(AlertMessageEnum.Success, loc["Edited"]);
         eventHandlerService.RaiseAsync(EventHandlerEnum.ToDoEdited);
-        IsEditMode = false;
+        isEditMode = false;
     }
 }

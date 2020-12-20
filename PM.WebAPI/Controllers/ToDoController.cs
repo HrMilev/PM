@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using PM.Common.Models.Rest;
+using PM.WebAPI.Extensions;
 using PM.WebAPI.Services.Interfaces;
 
 namespace PM.WebAPI.Controllers
@@ -25,13 +24,7 @@ namespace PM.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<ToDoRestModel>>> Get([FromQuery] int page)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int pageSize = 0;
-            if (Request.Headers.TryGetValue("X-PageSize", out StringValues values)
-                && int.TryParse(values.ToArray()[0], out pageSize))
-            {
-                var count = await _toDoService.CountAsync(userId);
-                Response.Headers.Add("X-Pages", Math.Ceiling(((decimal)count) / pageSize).ToString("0"));
-            }
+            var pageSize = await Request.GetPageSizePagination(Response, () => _toDoService.CountAsync(userId));
 
             var todos = await _toDoService.GetPageAsync(userId, page, pageSize);
             return Ok(todos);
@@ -40,11 +33,6 @@ namespace PM.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(ToDoRestModel toDoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var todo = await _toDoService.CreateAsync(toDoViewModel, User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return CreatedAtAction("GET", todo.Id, todo);
         }
@@ -52,11 +40,6 @@ namespace PM.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(ToDoRestModel toDoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var todo = await _toDoService.UpdateAsync(toDoViewModel, userId);
             if (todo == null)

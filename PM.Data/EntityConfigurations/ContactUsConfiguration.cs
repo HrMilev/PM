@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace PM.Data.EntityConfigurations
 {
-    public class ContactUsConfiguration : IdBaseEntityConfiguration<ContactUsForm, int>
+    public class ContactUsConfiguration : IdBaseEntityConfiguration<UserQuestion, int>
     {
-        public override void Configure(EntityTypeBuilder<ContactUsForm> builder)
+        public override void Configure(EntityTypeBuilder<UserQuestion> builder)
         {
             base.Configure(builder);
             builder.HasOne(x => x.UserCreator)
-                .WithMany(x => x.ContactUsForms)
+                .WithMany(x => x.UserQuestions)
                 .HasForeignKey(x => x.UserCreatorId);
             builder.HasOne(x => x.UserResponder)
                 .WithMany(x => x.ContactUsResponses)

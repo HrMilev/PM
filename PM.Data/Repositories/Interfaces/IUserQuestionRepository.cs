@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PM.Data.Repositories.Interfaces
 {
-    public interface IContactUsFormRepository : IRepositoryBase<ContactUsForm>
+    public interface IUserQuestionRepository : IRepositoryBase<UserQuestion>
     {
     }
 }

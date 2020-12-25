@@ -120,6 +120,9 @@
   <data name="A user with this login already exists" xml:space="preserve">
     <value>A user with this login already exists</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="Confirm Password" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Create a new account" xml:space="preserve">
     <value>Create a new account</value>
+  </data>
+  <data name="Create root folder" xml:space="preserve">
+    <value>Create root folder</value>
   </data>
   <data name="Create ToDo" xml:space="preserve">
     <value>Create ToDo</value>

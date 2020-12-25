@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using PM.Common.Models.Rest;
 using PM.Common.Strings;
 using PM.Data.Entities;
 using PM.WebAPI.Extensions;
 using PM.WebAPI.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -62,8 +60,13 @@ namespace PM.WebAPI.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = UserRole.Admin)]
-        public async Task<IActionResult> Put(UserQuestionRestModel userQuestionRestModel)
+        public async Task<IActionResult> Put(int id, UserQuestionRestModel userQuestionRestModel)
         {
+            if (userQuestionRestModel.Id.HasValue && id != userQuestionRestModel.Id)
+            {
+                return BadRequest();
+            }
+
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userQuestion = await _userQuestionService.UpdateAsync(userQuestionRestModel, userId);
             if (userQuestion == null)

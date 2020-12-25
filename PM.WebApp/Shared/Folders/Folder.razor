@@ -1,0 +1,64 @@
+﻿@inject IFolderRepository folderRepository
+@inject IStringLocalizer<Localization> loc
+
+<div class="card border border-dark mt-2">
+    <FolderPath Path="@GetPath()"
+                IsBackDisabled=@(rootFolder == currentFolder)
+                OnBack="OnBack"></FolderPath>
+    <FolderContent CurrentFolder="currentFolder"
+                   OnOpen="OnOpen"
+                   OnEdit="OnEdit"
+                   OnAdd="OnAdd"></FolderContent>
+</div>
+
+@code {
+    private FolderRestModel rootFolder = new FolderRestModel();
+    private FolderRestModel currentFolder = new FolderRestModel { ChildFolders = new List<FolderRestModel>() };
+    private List<FolderRestModel> foldersPath = new List<FolderRestModel>();
+
+    private string GetPath()
+    {
+        return foldersPath.Select(x => x.Name).Aggregate("/", (x, y) => x + y + "/", x => x.TrimEnd('/'));
+    }
+
+    private async Task OnAdd(FolderRestModel folder)
+    {
+        folder.ParentFolderId = currentFolder.Id != 0 ? currentFolder.Id : null;
+        var savedFolder = await folderRepository.CreateFolderAsync(folder);
+        currentFolder.ChildFolders.Add(savedFolder);
+    }
+
+    private async Task OnEdit(FolderRestModel folder)
+    {
+        var editedFolder = await folderRepository.UpdateAsync(folder);
+        var oldFolder = currentFolder.ChildFolders.FirstOrDefault(x => x.Id == editedFolder.Id);
+        currentFolder.ChildFolders[currentFolder.ChildFolders.IndexOf(oldFolder)] = editedFolder;
+    }
+
+    protected void OnBack()
+    {
+        if (foldersPath.Count() > 0)
+        {
+            foldersPath.RemoveAt(foldersPath.Count() - 1);
+            if (foldersPath.Count() > 0)
+            {
+                currentFolder = foldersPath.Last();
+            }
+            else
+            {
+                currentFolder = rootFolder;
+            }
+        }
+    }
+
+    protected void OnOpen(FolderRestModel folder)
+    {
+        currentFolder = folder;
+        foldersPath.Add(folder);
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        currentFolder = rootFolder = await folderRepository.GetTreeAsync();
+    }
+}

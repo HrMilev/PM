@@ -50,7 +50,7 @@ namespace PM.WebAPI
             services.AddIdentityServer(o =>
                 {
                     o.UserInteraction.LoginUrl = "/Login";
-                }).AddProfileService<ProfileService>()
+                })
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
                     options.IdentityResources["openid"].UserClaims.Add("name");

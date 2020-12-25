@@ -38,8 +38,13 @@ namespace PM.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(ToDoRestModel toDoViewModel)
+        public async Task<IActionResult> Put(string id, ToDoRestModel toDoViewModel)
         {
+            if (id != toDoViewModel.Id)
+            {
+                return BadRequest();
+            }
+
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var todo = await _toDoService.UpdateAsync(toDoViewModel, userId);
             if (todo == null)

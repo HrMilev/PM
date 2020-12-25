@@ -1,0 +1,23 @@
+﻿@inject IStringLocalizer<Localization> loc
+
+<div class="card-body">
+    <div class="card-subtitle row">
+        <button type="button"
+                class="col col-1 btn btn-info"
+                disabled="@IsBackDisabled"
+                @onclick="OnBack">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="col col-11 justify-content-center align-self-center">@Path</div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string Path { get; set; }
+    [Parameter]
+    public bool IsBackDisabled { get; set; }
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+}

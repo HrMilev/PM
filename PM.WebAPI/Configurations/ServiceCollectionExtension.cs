@@ -17,6 +17,8 @@ namespace PM.WebAPI.Configurations
             services.AddTransient<IUserQuestionService, UserQuestionService>();
             services.AddTransient<IEmailSenderService, EmailSenderService>();
             services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
+            services.AddTransient<IFolderRepository, FolderRepository>();
+            services.AddTransient<IFolderService, FolderService>();
         }
     }
 }

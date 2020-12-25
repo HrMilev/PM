@@ -71,7 +71,7 @@ namespace PM.WebAPI.Services
 
         public async Task<UserQuestionRestModel> UpdateAsync(UserQuestionRestModel userQuestionRestModel, string replierId)
         {
-            var oldUserQuestions = await _userQuestionRepository.Get(userQuestionRestModel.Id);
+            var oldUserQuestions = await _userQuestionRepository.GetAsync(userQuestionRestModel.Id);
             if (oldUserQuestions == null)
             {
                 return null;

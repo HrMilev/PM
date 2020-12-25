@@ -54,15 +54,15 @@ namespace PM.Data.Repositories.Bases
             }
         }
 
-        public virtual async Task<T> Get<Tid>(Tid id)
+        public virtual async Task<T> GetAsync<Tid>(Tid id)
         {
             return await _dbContext.FindAsync<T>(id);
         }
 
-        public virtual async Task<IList<T>> GetAll(Func<T, bool> predicate)
+        public virtual IList<T> GetList(Func<T, bool> predicate)
         {
-            var queryable = _dbContext.Set<T>().Where(predicate).AsQueryable();
-            return await queryable.ToListAsync();
+            var queryable = _dbContext.Set<T>().AsQueryable().Where(predicate);
+            return queryable.ToList();
         }
 
         public virtual async Task DeleteAsync(Func<T, bool> predicate)

@@ -1,0 +1,81 @@
+﻿@inject IStringLocalizer<Localization> loc
+
+<div class="card-body">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">@loc["Name"]</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var child in CurrentFolder.ChildFolders)
+            {
+                <FolderContentRow Folder="child" OnOpen="OnOpen" OnEdit="OnEdit"></FolderContentRow>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                @if (isAddingFolder)
+                {
+                    <td>
+                        <EditForm class="form-inline" Model="newFolder" OnValidSubmit="OnValidAdding">
+                            <DataAnnotationsValidator />
+                            <div class="form-group">
+                                <InputText class="form-control border-dark"
+                                           @bind-Value="@newFolder.Name">
+                                </InputText>
+                                <ValidationMessage For="@(() => newFolder.Name)" />
+                            </div>
+                            <button class="btn btn-warning" type="submit">@loc["Save"]</button>
+                        </EditForm>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <Close OnClick="@(() => isAddingFolder = false)"></Close>
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" @onclick=@OnAddingFolder>
+                            <i class="fas fa-folder-plus"></i>
+                        </button>
+                    </td>
+                }
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+@code {
+    private bool isAddingFolder;
+    private FolderRestModel newFolder = new FolderRestModel();
+    [Parameter]
+    public FolderRestModel CurrentFolder { get; set; }
+    [Parameter]
+    public EventCallback<FolderRestModel> OnOpen { get; set; }
+    [Parameter]
+    public EventCallback<FolderRestModel> OnEdit { get; set; }
+    [Parameter]
+    public EventCallback<FolderRestModel> OnAdd { get; set; }
+
+    private void OnAddingFolder()
+    {
+        isAddingFolder = true;
+    }
+
+    private async Task OnValidAdding()
+    {
+        isAddingFolder = false;
+        await OnAdd.InvokeAsync(newFolder);
+        newFolder = new FolderRestModel();
+    }
+}

@@ -1,7 +1,7 @@
 ﻿@inject IStringLocalizer<Localization> loc
 
-<tr>
-    <th scope="row" style="width: 91%">
+<tr style="@(isDeleting ? "display: none" : "")">
+    <th scope="row">
         @if (isEdit)
         {
             <EditForm class="form-inline" Model="Folder" OnValidSubmit="OnValidEditing">
@@ -21,26 +21,26 @@
             @Folder.Name
         }
     </th>
-    <th scope="row" style="width: 3%" @onclick="@(async () => await OnOpen.InvokeAsync(Folder))">
+    <td @onclick="@(async () => await OnOpen.InvokeAsync(Folder))">
         @if (!isEdit)
         {
             <button type="button" class="btn btn-primary">
                 <i class="fas fa-folder-open"></i>
             </button>
         }
-    </th>
-    <th scope="row" style="width: 3%">
+    </td>
+    <td>
         @if (!isEdit)
         {
             <button type="button" class="btn btn-warning" @onclick=@OnEditing>
                 <i class="fas fa-edit"></i>
             </button>
         }
-    </th>
-    <th scope="row" style="width: 3%">
+    </td>
+    <td>
         @if (!isEdit)
         {
-            <button type="button" class="btn btn-danger">
+            <button type="button" class="btn btn-danger" @onclick=@OnDeleting>
                 <i class="fas fa-trash"></i>
             </button>
         }
@@ -48,11 +48,12 @@
         {
             <Close OnClick="OnClose"></Close>
         }
-    </th>
+    </td>
 </tr>
 
 
 @code {
+    private bool isDeleting;
     private bool isEdit;
     private string folderName;
     [Parameter]
@@ -61,6 +62,15 @@
     public EventCallback<FolderRestModel> OnOpen { get; set; }
     [Parameter]
     public EventCallback<FolderRestModel> OnEdit { get; set; }
+    [Parameter]
+    public EventCallback<FolderRestModel> OnDelete { get; set; }
+
+    private async Task OnDeleting()
+    {
+        isDeleting = true;
+        await OnDelete.InvokeAsync(Folder);
+        isDeleting = false;
+    }
 
     private void OnEditing()
     {

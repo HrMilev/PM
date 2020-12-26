@@ -20,10 +20,10 @@ namespace PM.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<FolderRestModel> Get()
+        public async Task<ActionResult<FolderRestModel>> Get()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var folder = _folderService.GetTree(userId);
+            var folder = await _folderService.GetTreeAsync(userId);
             return Ok(folder);
         }
 

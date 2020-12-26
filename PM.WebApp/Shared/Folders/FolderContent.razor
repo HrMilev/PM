@@ -4,16 +4,19 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">@loc["Name"]</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th style="width: 91%" scope="col">@loc["Name"]</th>
+                <th style="width: 3%" scope="col"></th>
+                <th style="width: 3%" scope="col"></th>
+                <th style="width: 3%" scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var child in CurrentFolder.ChildFolders)
             {
-                <FolderContentRow Folder="child" OnOpen="OnOpen" OnEdit="OnEdit"></FolderContentRow>
+                <FolderContentRow Folder="child"
+                                  OnOpen="OnOpen"
+                                  OnEdit="OnEdit"
+                                  OnDelete="OnDelete"></FolderContentRow>
             }
         </tbody>
         <tfoot>
@@ -66,6 +69,8 @@
     public EventCallback<FolderRestModel> OnEdit { get; set; }
     [Parameter]
     public EventCallback<FolderRestModel> OnAdd { get; set; }
+    [Parameter]
+    public EventCallback<FolderRestModel> OnDelete { get; set; }
 
     private void OnAddingFolder()
     {

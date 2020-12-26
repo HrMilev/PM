@@ -7,7 +7,7 @@ namespace PM.WebAPI.Services
     {
         Task<FolderRestModel> CreateFolderAsync(string userId, FolderRestModel folderRest);
         Task DeleteAsync(int id, string userId);
-        FolderRestModel GetTree(string userId);
+        Task<FolderRestModel> GetTreeAsync(string userId);
         Task<FolderRestModel> RenameAsync(int id, string userId, string name);
     }
 }

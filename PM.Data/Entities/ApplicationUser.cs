@@ -9,5 +9,7 @@ namespace PM.Data.Entities
         public ICollection<UserQuestion> UserQuestions { get; set; } = new HashSet<UserQuestion>();
         public ICollection<UserQuestion> UserQuestionResponses { get; set; } = new HashSet<UserQuestion>();
         public ICollection<Folder> Folders { get; set; } = new HashSet<Folder>();
+        public int? RootFolderId { get; set; }
+        public Folder RootFolder { get; set; }
     }
 }

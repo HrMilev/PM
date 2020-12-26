@@ -8,7 +8,8 @@
     <FolderContent CurrentFolder="currentFolder"
                    OnOpen="OnOpen"
                    OnEdit="OnEdit"
-                   OnAdd="OnAdd"></FolderContent>
+                   OnAdd="OnAdd"
+                   OnDelete="OnDelete"></FolderContent>
 </div>
 
 @code {
@@ -18,7 +19,13 @@
 
     private string GetPath()
     {
-        return foldersPath.Select(x => x.Name).Aggregate("/", (x, y) => x + y + "/", x => x.TrimEnd('/'));
+        return foldersPath.Select(x => x.Name).Aggregate("", (x, y) => x + "/" + y);
+    }
+
+    private async Task OnDelete(FolderRestModel folder)
+    {
+        await folderRepository.DeleteAsync(folder.Id);
+        currentFolder.ChildFolders.RemoveAt(currentFolder.ChildFolders.IndexOf(folder));
     }
 
     private async Task OnAdd(FolderRestModel folder)
@@ -37,17 +44,10 @@
 
     protected void OnBack()
     {
-        if (foldersPath.Count() > 0)
+        if (foldersPath.Count() > 1)
         {
             foldersPath.RemoveAt(foldersPath.Count() - 1);
-            if (foldersPath.Count() > 0)
-            {
-                currentFolder = foldersPath.Last();
-            }
-            else
-            {
-                currentFolder = rootFolder;
-            }
+            currentFolder = foldersPath.Last();
         }
     }
 
@@ -60,5 +60,6 @@
     protected async override Task OnInitializedAsync()
     {
         currentFolder = rootFolder = await folderRepository.GetTreeAsync();
+        foldersPath.Add(currentFolder);
     }
 }

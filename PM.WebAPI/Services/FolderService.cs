@@ -63,19 +63,19 @@ namespace PM.WebAPI.Services
             return _mapper.Map<FolderRestModel>(folder);
         }
 
-        public async Task<FolderRestModel> RenameAsync(int id, string userId, string name)
+        public async Task<FolderRestModel> UpdateAsync(string userId, FolderRestModel folder)
         {
-            var folder = _folderRepository
-                .GetList(x => x.CreatorId == userId && x.Id == id).FirstOrDefault();
+            var oldFolder = _folderRepository
+                .GetList(x => x.CreatorId == userId && x.Id == folder.Id).FirstOrDefault();
 
-            if (folder == null || folder.ParentFolderId == null)
+            if (oldFolder == null || oldFolder.ParentFolderId == null)
             {
                 return null;
             }
 
-            folder.Name = name;
-            await _folderRepository.UpdateAsync(folder);
-            return _mapper.Map<FolderRestModel>(folder);
+            return _mapper.Map<FolderRestModel>(
+                await _folderRepository.UpdateAsync(
+                    _mapper.Map(folder, oldFolder)));
         }
 
         public async Task DeleteAsync(int id, string userId)

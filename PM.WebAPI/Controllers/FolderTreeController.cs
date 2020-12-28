@@ -36,7 +36,7 @@ namespace PM.WebAPI.Controllers
             }
 
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var updatedFolder = await _folderService.RenameAsync(id, userId, folder.Name);
+            var updatedFolder = await _folderService.UpdateAsync(userId, folder);
             if (updatedFolder == null)
             {
                 return NotFound();

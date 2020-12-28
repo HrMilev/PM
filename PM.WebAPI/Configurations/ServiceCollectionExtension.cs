@@ -21,6 +21,7 @@ namespace PM.WebAPI.Configurations
             services.AddTransient<IFolderService, FolderService>();
             services.AddTransient<IUploadedFileRepository, UploadedFileRepository>();
             services.AddTransient<IUploadedFileService, UploadedFileService>();
+            services.AddTransient<IFileService, FileService>();
         }
     }
 }

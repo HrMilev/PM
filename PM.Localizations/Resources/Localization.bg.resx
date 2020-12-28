@@ -186,6 +186,9 @@
   <data name="Message" xml:space="preserve">
     <value>Съобщение</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Име</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Парола</value>
   </data>

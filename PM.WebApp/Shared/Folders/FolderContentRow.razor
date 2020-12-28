@@ -1,7 +1,7 @@
 ﻿@inject IStringLocalizer<Localization> loc
 
 <tr style="@(isDeleting ? "display: none" : "")">
-    <th scope="row">
+    <th scope="row" @onclick="OnOpening" @ondblclick="OnEditing">
         @if (isEdit)
         {
             <EditForm class="form-inline" Model="Folder" OnValidSubmit="OnValidEditing">
@@ -21,21 +21,9 @@
             @Folder.Name
         }
     </th>
-    <td @onclick="@(async () => await OnOpen.InvokeAsync(Folder))">
-        @if (!isEdit)
-        {
-            <button type="button" class="btn btn-primary">
-                <i class="fas fa-folder-open"></i>
-            </button>
-        }
+    <td>
     </td>
     <td>
-        @if (!isEdit)
-        {
-            <button type="button" class="btn btn-warning" @onclick=@OnEditing>
-                <i class="fas fa-edit"></i>
-            </button>
-        }
     </td>
     <td>
         @if (!isEdit)
@@ -53,6 +41,7 @@
 
 
 @code {
+    private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
     private bool isDeleting;
     private bool isEdit;
     private string folderName;
@@ -65,6 +54,20 @@
     [Parameter]
     public EventCallback<FolderRestModel> OnDelete { get; set; }
 
+    private void OnOpening()
+    {
+        cancellationTokenSource = new CancellationTokenSource();
+        var token = cancellationTokenSource.Token;
+        Task.Run(async () =>
+        {
+            await Task.Delay(400, token);
+            if (!isEdit)
+            {
+                await OnOpen.InvokeAsync(Folder);
+            }
+        }, token);
+    }
+
     private async Task OnDeleting()
     {
         isDeleting = true;
@@ -74,8 +77,12 @@
 
     private void OnEditing()
     {
-        isEdit = true;
-        folderName = Folder.Name;
+        cancellationTokenSource.Cancel();
+        if (!isEdit)
+        {
+            isEdit = true;
+            folderName = Folder.Name;
+        }
     }
 
     private void OnClose()
@@ -90,6 +97,7 @@
         {
             return;
         }
+        cancellationTokenSource.Cancel();
         isEdit = false;
         await OnEdit.InvokeAsync(Folder);
     }

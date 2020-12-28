@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using PM.Common.Models.Rest;
 using PM.Data.Entities;
@@ -18,17 +17,18 @@ namespace PM.WebAPI.Services
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IFolderRepository _folderRepository;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _env;
+        private readonly IFileService _fileService;
 
-        public UploadedFileService(IUploadedFileRepository uploadedFileRepository,
+        public UploadedFileService(
+            IUploadedFileRepository uploadedFileRepository,
             IFolderRepository folderRepository,
             IMapper mapper,
-            IWebHostEnvironment env)
+            IFileService fileService)
         {
             _uploadedFileRepository = uploadedFileRepository;
             _folderRepository = folderRepository;
             _mapper = mapper;
-            _env = env;
+            _fileService = fileService;
         }
 
         public async Task<UploadedFileRestModel> DownloadAsync(string userId, string id)
@@ -38,9 +38,10 @@ namespace PM.WebAPI.Services
             {
                 return null;
             }
-            var path = $"{_env.WebRootPath}\\{userId}\\{id}";
 
-            if (!File.Exists(path))
+            var path = _fileService.GetUserFilePathIfExists(userId, id);
+
+            if (path == null)
             {
                 return null;
             }
@@ -80,11 +81,7 @@ namespace PM.WebAPI.Services
                 file.Id = Guid.NewGuid();
                 file.FolderId = folderId;
 
-                var pathToDirectory = $"{_env.WebRootPath}\\{userId}";
-                Directory.CreateDirectory(pathToDirectory);
-                var path = pathToDirectory + $"\\{file.Id}";
-                using var fs = File.Create(path);
-                fs.Write(restFile.Content, 0, restFile.Content.Length);
+                await _fileService.WriteUserFileToFileSystem(userId, file.Id.ToString(), restFile.Content);
 
                 filesToSave.Add(file);
             }
@@ -95,13 +92,11 @@ namespace PM.WebAPI.Services
 
         public async Task<bool> DeleteAsync(string userId, string id)
         {
-            var path = $"{_env.WebRootPath}\\{userId}\\{id}";
-
-            if (!File.Exists(path))
+            if (!_fileService.DeleteUserFile(userId, id))
             {
                 return false;
             }
-            File.Delete(path);
+
             return await _uploadedFileRepository.DeleteAsync(x => x.Id.ToString() == id);
         }
 
@@ -111,14 +106,11 @@ namespace PM.WebAPI.Services
             var deletedFilesId = new List<Guid>();
             foreach (var file in files)
             {
-                var path = $"{_env.WebRootPath}\\{userId}\\{file.Id}";
-
-                if (!File.Exists(path))
+                if (!_fileService.DeleteUserFile(userId, file.Id.ToString()))
                 {
                     continue;
                 }
 
-                File.Delete(path);
                 deletedFilesId.Add(file.Id);
             }
 

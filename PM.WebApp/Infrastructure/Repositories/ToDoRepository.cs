@@ -1,6 +1,7 @@
 ﻿using PM.Common.Models.Rest;
 using PM.WebApp.Infrastructure.Repositories.Interfaces;
 using PM.WebApp.Infrastructure.Utils.Interfaces;
+using PM.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -70,11 +71,11 @@ namespace PM.WebApp.Infrastructure.Repositories
             return (response.Response, pages);
         }
 
-        public async Task<string> DeleteAsync(string id)
+        public async Task<HttpResponseWrapper<string>> DeleteAsync(string id)
         {
             string url = URL + $"/{id}";
             var response = await _httpService.DeleteAsync<string>(url);
-            return response.Response;
+            return response;
         }
     }
 }

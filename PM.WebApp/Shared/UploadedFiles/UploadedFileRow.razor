@@ -82,6 +82,7 @@
     private async Task OnDeleting()
     {
         isDeleting = true;
+
         await OnDelete.InvokeAsync(File);
         isDeleting = false;
     }

@@ -1,4 +1,5 @@
 ﻿using PM.Common.Models.Rest;
+using PM.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace PM.WebApp.Infrastructure.Repositories.Interfaces
         Task<ToDoRestModel> CreateAsync(ToDoRestModel toDo);
         Task<IEnumerable<ToDoRestModel>> GetToDosAsync();
         Task<(IEnumerable<ToDoRestModel>, int)> GetPageAsync(int page, int pageSize = 5);
-        Task<string> DeleteAsync(string id);
+        Task<HttpResponseWrapper<string>> DeleteAsync(string id);
         Task<ToDoRestModel> UpdateAsync(ToDoRestModel toDo);
     }
 }

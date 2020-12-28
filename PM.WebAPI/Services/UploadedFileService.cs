@@ -93,16 +93,16 @@ namespace PM.WebAPI.Services
             return _mapper.Map<IList<UploadedFileRestModel>>(savedFiles);
         }
 
-        public async Task DeleteAsync(string userId, string id)
+        public async Task<bool> DeleteAsync(string userId, string id)
         {
             var path = $"{_env.WebRootPath}\\{userId}\\{id}";
 
             if (!File.Exists(path))
             {
-                return;
+                return false;
             }
             File.Delete(path);
-            await _uploadedFileRepository.DeleteAsync(x => x.Id.ToString() == id);
+            return await _uploadedFileRepository.DeleteAsync(x => x.Id.ToString() == id);
         }
 
         public async Task DeleteOrphanAsync(string userId)

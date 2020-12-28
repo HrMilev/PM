@@ -43,8 +43,15 @@
     public async Task OnDelete()
     {
         var result = await toDoRepository.DeleteAsync(Model.Id);
-        alertService.PushMessage(AlertMessageEnum.Success, loc["Deleted"]);
-        eventHandlerService.RaiseAsync(EventHandlerEnum.ToDoDeleted);
+        if (result.IsSuccess)
+        {
+            alertService.PushMessage(AlertMessageEnum.Success, loc["Deleted"]);
+            eventHandlerService.RaiseAsync(EventHandlerEnum.ToDoDeleted);
+        }
+        else
+        {
+            alertService.PushMessage(AlertMessageEnum.Danger, loc["Something went wrong"]);
+        }
     }
 
     public void OnEdit()

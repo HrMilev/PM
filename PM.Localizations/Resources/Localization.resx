@@ -207,6 +207,9 @@
   <data name="Sent" xml:space="preserve">
     <value>Sent</value>
   </data>
+  <data name="Something went wrong" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
   <data name="Start at" xml:space="preserve">
     <value>Start at</value>
   </data>

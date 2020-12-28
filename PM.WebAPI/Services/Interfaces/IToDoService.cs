@@ -9,7 +9,7 @@ namespace PM.WebAPI.Services.Interfaces
         Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel, string userId);
         IList<ToDoRestModel> GetList(string userId);
         Task<IList<ToDoRestModel>> GetPageAsync(string userId, int page, int pageSize);
-        Task DeleteAsync(string id, string userId);
+        Task<bool> DeleteAsync(string id, string userId);
         Task<ToDoRestModel> GetAsync(string id, string userId);
         Task<ToDoRestModel> UpdateAsync(ToDoRestModel toDoRestModel, string userId);
     }

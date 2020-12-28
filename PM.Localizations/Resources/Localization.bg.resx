@@ -207,6 +207,9 @@
   <data name="Sent" xml:space="preserve">
     <value>Изпратено</value>
   </data>
+  <data name="Something went wrong" xml:space="preserve">
+    <value>Нещо се обърка</value>
+  </data>
   <data name="Start at" xml:space="preserve">
     <value>Начало</value>
   </data>

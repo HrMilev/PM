@@ -8,7 +8,7 @@ namespace PM.Data.Repositories.Bases.Interfaces
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task DeleteAsync(Func<T, bool> predicate);
+        Task<bool> DeleteAsync(Func<T, bool> predicate);
         Task<T> GetAsync<Tid>(Tid id);
         IList<T> GetList(Func<T, bool> predicate);
         IQueryable<T> GetQueryable();

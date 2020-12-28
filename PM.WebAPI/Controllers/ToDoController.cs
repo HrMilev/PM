@@ -59,7 +59,11 @@ namespace PM.WebAPI.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await _toDoService.DeleteAsync(id, userId);
+            if (!await _toDoService.DeleteAsync(id, userId))
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
     }

@@ -1,5 +1,6 @@
 ﻿@inject IStringLocalizer<Localization> loc
 @inject IUploadedFileRepository uploadedFileRepository
+@inject IAlertService alertService
 
 <div class="card-body">
     <table class="table table-hover">
@@ -86,8 +87,16 @@
 
     private async Task OnFileDelete(UploadedFileRestModel file)
     {
-        await uploadedFileRepository.DeleteAsync(file.Id);
-        CurrentFolder.Files.RemoveAt(CurrentFolder.Files.IndexOf(file));
+        var result = await uploadedFileRepository.DeleteAsync(file.Id);
+        if (result.IsSuccess)
+        {
+            alertService.PushMessage(AlertMessageEnum.Success, loc["Deleted"]);
+            CurrentFolder.Files.RemoveAt(CurrentFolder.Files.IndexOf(file));
+        }
+        else
+        {
+            alertService.PushMessage(AlertMessageEnum.Danger, loc["Something went wrong"]);
+        }
     }
 
     private async Task OnFileEdit(UploadedFileRestModel file)

@@ -64,11 +64,11 @@ namespace PM.Data.Repositories.Bases
             return queryable.ToList();
         }
 
-        public virtual async Task DeleteAsync(Func<T, bool> predicate)
+        public virtual async Task<bool> DeleteAsync(Func<T, bool> predicate)
         {
             var entitiesToRemove = _dbContext.Set<T>().Where(predicate);
             _dbContext.Set<T>().RemoveRange(entitiesToRemove);
-            await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         protected void ThrowIfNull<Type>(Type entity, string methodName)

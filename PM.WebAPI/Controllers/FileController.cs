@@ -5,8 +5,6 @@ using PM.Common.Models.Rest;
 using System.Collections.Generic;
 using System.Security.Claims;
 using PM.WebAPI.Services.Interfaces;
-using System.Net.Http.Headers;
-using System.Net.Mime;
 
 namespace PM.WebAPI.Controllers
 {
@@ -32,7 +30,7 @@ namespace PM.WebAPI.Controllers
                 return NotFound();
             }
 
-            return File(file.Content, MediaTypeNames.Application.Octet, file.Name);
+            return Ok(file);
         }
 
         [HttpPut("{id}")]
@@ -63,6 +61,14 @@ namespace PM.WebAPI.Controllers
             }
 
             return Ok(savedFiles);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await _uploadedFileService.DeleteAsync(userId, id);
+            return Ok();
         }
     }
 }

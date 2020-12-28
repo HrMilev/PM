@@ -86,7 +86,8 @@
 
     private async Task OnFileDelete(UploadedFileRestModel file)
     {
-
+        await uploadedFileRepository.DeleteAsync(file.Id);
+        CurrentFolder.Files.RemoveAt(CurrentFolder.Files.IndexOf(file));
     }
 
     private async Task OnFileEdit(UploadedFileRestModel file)
@@ -94,11 +95,6 @@
         var updatedFile = await uploadedFileRepository.UpdateAsync(file);
         var oldFile = CurrentFolder.Files.FirstOrDefault(x => x.Id == updatedFile.Id);
         CurrentFolder.Files[CurrentFolder.Files.IndexOf(oldFile)] = updatedFile;
-    }
-
-    private async Task OnFileDownload(UploadedFileRestModel file)
-    {
-
     }
 
     private async Task OnValidAdding()

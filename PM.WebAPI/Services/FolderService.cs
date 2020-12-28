@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PM.Common.Models.Rest;
 using PM.Data.Entities;
 using PM.Data.Repositories.Interfaces;
+using PM.WebAPI.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,14 +16,17 @@ namespace PM.WebAPI.Services
         private readonly IFolderRepository _folderRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUploadedFileService _uploadedFileService;
 
         public FolderService(IFolderRepository folderRepository,
             IMapper mapper,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IUploadedFileService uploadedFileService)
         {
             _folderRepository = folderRepository;
             _mapper = mapper;
             _userManager = userManager;
+            _uploadedFileService = uploadedFileService;
         }
 
         public async Task<FolderRestModel> GetTreeAsync(string userId)
@@ -85,6 +89,7 @@ namespace PM.WebAPI.Services
             }
 
             await _folderRepository.DeleteFolderAsync(id, userId);
+            await _uploadedFileService.DeleteOrphanAsync(userId);
         }
 
         private async Task<Folder> GetTreeRoot(string userId, List<Folder> folders)

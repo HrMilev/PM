@@ -1,6 +1,6 @@
 ﻿@inject IStringLocalizer<Localization> loc
 @inject IUploadedFileRepository uploadedFileRepository
-@inject AuthenticationStateProvider authenticationStateProvider
+@inject IJSRuntime JSRuntime
 
 <tr style="@(isDeleting ? "display: none" : "")">
     <th scope="row">
@@ -26,9 +26,9 @@
     <td>
         @if (!isEdit)
         {
-            <a class="btn btn-primary" href="@($"/{userId}/{File.Id}")" download="@File.Name" target="_top">
+            <button type="button" class="btn btn-primary" @onclick=@OnDownload>
                 <i class="fas fa-file-download"></i>
-            </a>
+            </button>
         }
     </td>
     <td>
@@ -66,6 +66,19 @@
     [Parameter]
     public EventCallback<UploadedFileRestModel> OnDelete { get; set; }
 
+    private async Task OnDownload()
+    {
+        var file = await uploadedFileRepository.GetFileAsync(File.Id);
+
+        await JSRuntime.InvokeVoidAsync("downloadFromByteArray",
+              new
+              {
+                  ByteArray = file.Content,
+                  FileName = file.Name,
+                  ContentType = MediaTypeNames.Application.Octet,
+              });
+    }
+
     private async Task OnDeleting()
     {
         isDeleting = true;
@@ -93,11 +106,5 @@
         }
         isEdit = false;
         await OnEdit.InvokeAsync(File);
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
-        userId = state.User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
     }
 }

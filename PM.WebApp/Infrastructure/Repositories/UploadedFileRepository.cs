@@ -17,9 +17,17 @@ namespace PM.WebApp.Infrastructure.Repositories
             _httpService = httpService;
         }
 
-        public string GetHref(string id)
+        public async Task<UploadedFileRestModel> GetFileAsync(string id)
         {
-            return $"{URL}/{id}";
+            var uri = $"{URL}/{id}";
+            var response = await _httpService.GetAsync<UploadedFileRestModel>(uri);
+
+            if (!response.IsSuccess)
+            {
+                throw new ApplicationException(await response.GetBodyAsync());
+            }
+
+            return response.Response;
         }
 
         public async Task<UploadedFileRestModel> UpdateAsync(UploadedFileRestModel file)
@@ -45,6 +53,13 @@ namespace PM.WebApp.Infrastructure.Repositories
                 throw new ApplicationException(await response.GetBodyAsync());
             }
 
+            return response.Response;
+        }
+
+        public async Task<string> DeleteAsync(string id)
+        {
+            string url = URL + $"/{id}";
+            var response = await _httpService.DeleteAsync<string>(url);
             return response.Response;
         }
     }

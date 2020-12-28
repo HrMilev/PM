@@ -33,7 +33,7 @@ namespace PM.WebAPI.Services
 
         public async Task<UploadedFileRestModel> DownloadAsync(string userId, string id)
         {
-            var file = await _uploadedFileRepository.GetAsync(id);
+            var file = await _uploadedFileRepository.GetAsync(Guid.Parse(id));
             if (file == null)
             {
                 return null;
@@ -91,6 +91,38 @@ namespace PM.WebAPI.Services
 
             var savedFiles = await _uploadedFileRepository.SaveListAsync(filesToSave);
             return _mapper.Map<IList<UploadedFileRestModel>>(savedFiles);
+        }
+
+        public async Task DeleteAsync(string userId, string id)
+        {
+            var path = $"{_env.WebRootPath}\\{userId}\\{id}";
+
+            if (!File.Exists(path))
+            {
+                return;
+            }
+            File.Delete(path);
+            await _uploadedFileRepository.DeleteAsync(x => x.Id.ToString() == id);
+        }
+
+        public async Task DeleteOrphanAsync(string userId)
+        {
+            var files = _uploadedFileRepository.GetList(x => x.FolderId == null);
+            var deletedFilesId = new List<Guid>();
+            foreach (var file in files)
+            {
+                var path = $"{_env.WebRootPath}\\{userId}\\{file.Id}";
+
+                if (!File.Exists(path))
+                {
+                    continue;
+                }
+
+                File.Delete(path);
+                deletedFilesId.Add(file.Id);
+            }
+
+            await _uploadedFileRepository.DeleteAsync(x => deletedFilesId.Contains(x.Id));
         }
     }
 }

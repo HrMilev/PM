@@ -11,5 +11,6 @@ namespace PM.Data.Entities
         public string CreatorId { get; set; }
         public ApplicationUser Creator { get; set; }
         public ICollection<Folder> ChildFolders { get; set; } = new HashSet<Folder>();
+        public ICollection<UploadedFile> Files { get; set; } = new HashSet<UploadedFile>();
     }
 }

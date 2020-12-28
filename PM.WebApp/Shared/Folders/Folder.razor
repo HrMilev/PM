@@ -1,10 +1,15 @@
 ﻿@inject IFolderRepository folderRepository
+@inject IUploadedFileRepository fileRepository
 @inject IStringLocalizer<Localization> loc
 
 <div class="card border border-dark mt-2">
     <FolderPath Path="@GetPath()"
                 IsBackDisabled=@(rootFolder == currentFolder)
-                OnBack="OnBack"></FolderPath>
+                OnBack="OnBack">
+        <Content>
+            <UploadFiles OnChange="OnInputFiles"></UploadFiles>
+        </Content>
+    </FolderPath>
     <FolderContent CurrentFolder="currentFolder"
                    OnOpen="OnOpen"
                    OnEdit="OnEdit"
@@ -14,8 +19,35 @@
 
 @code {
     private FolderRestModel rootFolder = new FolderRestModel();
-    private FolderRestModel currentFolder = new FolderRestModel { ChildFolders = new List<FolderRestModel>() };
+    private FolderRestModel currentFolder = new FolderRestModel { ChildFolders = new List<FolderRestModel>(), Files = new List<UploadedFileRestModel>() };
     private List<FolderRestModel> foldersPath = new List<FolderRestModel>();
+
+    private async Task OnInputFiles(InputFileChangeEventArgs e)
+    {
+        IReadOnlyList<IBrowserFile> selectedFiles = e.GetMultipleFiles();
+        var filesToSave = new List<UploadedFileRestModel>();
+        foreach (var file in selectedFiles)
+        {
+            using Stream stream = file.OpenReadStream();
+            using MemoryStream ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+
+            var uploadFile = new UploadedFileRestModel
+            {
+                Name = file.Name,
+                Content = ms.ToArray()
+            };
+
+            filesToSave.Add(uploadFile);
+        }
+
+        if (currentFolder.Files == null)
+        {
+            currentFolder.Files = new List<UploadedFileRestModel>();
+        }
+
+        currentFolder.Files = currentFolder.Files.Concat(await fileRepository.SaveListAsync(filesToSave, currentFolder.Id)).ToList();
+    }
 
     private string GetPath()
     {

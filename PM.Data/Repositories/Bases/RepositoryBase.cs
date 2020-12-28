@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PM.Data.Repositories.Bases.Interfaces;
+﻿using PM.Data.Repositories.Bases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +71,7 @@ namespace PM.Data.Repositories.Bases
             await _dbContext.SaveChangesAsync();
         }
 
-        private void ThrowIfNull(T entity, string methodName)
+        protected void ThrowIfNull<Type>(Type entity, string methodName)
         {
             if (entity == null)
             {

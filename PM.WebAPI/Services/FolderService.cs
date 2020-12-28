@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using PM.Common.Models.Rest;
 using PM.Data.Entities;
 using PM.Data.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +29,7 @@ namespace PM.WebAPI.Services
         {
             var folders = _folderRepository.GetQueryable()
                 .Include(x => x.ChildFolders)
+                .Include(x => x.Files)
                 .Where(x => x.CreatorId == userId)
                 .ToList();
 

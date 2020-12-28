@@ -18,6 +18,7 @@ namespace PM.WebApp.Configurations
             services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<IEventHandlerService, EventHandlerService>();
+            services.AddTransient<IUploadedFileRepository, UploadedFileRepository>();
         }
     }
 }

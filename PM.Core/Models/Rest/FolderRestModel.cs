@@ -11,5 +11,6 @@ namespace PM.Common.Models.Rest
         public string Name { get; set; }
         public int? ParentFolderId { get; set; }
         public IList<FolderRestModel> ChildFolders { get; set; }
+        public IList<UploadedFileRestModel> Files { get; set; }
     }
 }

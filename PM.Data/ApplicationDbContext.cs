@@ -12,6 +12,7 @@ namespace PM.Data
         public DbSet<ToDo> ToDos { get; set; }
         public DbSet<UserQuestion> UserQuestions { get; set; }
         public DbSet<Folder> Folders { get; set; }
+        public DbSet<UploadedFile> UploadedFiles { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,

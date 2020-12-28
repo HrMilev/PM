@@ -8,7 +8,8 @@
                 @onclick="OnBack">
             <i class="fas fa-arrow-left"></i>
         </button>
-        <div class="col col-11 justify-content-center align-self-center">@Path</div>
+        <div class="col col-10 justify-content-center align-self-center">@Path</div>
+        <div class="col col-1 justify-content-center align-self-center">@Content</div>
     </div>
 </div>
 
@@ -20,4 +21,6 @@
     public bool IsBackDisabled { get; set; }
     [Parameter]
     public EventCallback OnBack { get; set; }
+    [Parameter]
+    public RenderFragment Content { get; set; }
 }

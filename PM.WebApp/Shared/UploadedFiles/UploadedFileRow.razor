@@ -1,0 +1,103 @@
+﻿@inject IStringLocalizer<Localization> loc
+@inject IUploadedFileRepository uploadedFileRepository
+@inject AuthenticationStateProvider authenticationStateProvider
+
+<tr style="@(isDeleting ? "display: none" : "")">
+    <th scope="row">
+        @if (isEdit)
+        {
+            <EditForm class="form-inline" Model="File" OnValidSubmit="OnValidEditing">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <InputText class="form-control border-dark"
+                               @bind-Value="@File.Name">
+                    </InputText>
+                    <ValidationMessage For="@(() => File.Name)" />
+                </div>
+                <button class="btn btn-warning" type="submit">@loc["Save"]</button>
+            </EditForm>
+        }
+        else
+        {
+            <i class="fas fa-file"></i>
+            @File.Name
+        }
+    </th>
+    <td>
+        @if (!isEdit)
+        {
+            <a class="btn btn-primary" href="@($"/{userId}/{File.Id}")" download="@File.Name" target="_top">
+                <i class="fas fa-file-download"></i>
+            </a>
+        }
+    </td>
+    <td>
+        @if (!isEdit)
+        {
+            <button type="button" class="btn btn-warning" @onclick=@OnEditing>
+                <i class="fas fa-edit"></i>
+            </button>
+        }
+    </td>
+    <td>
+        @if (!isEdit)
+        {
+            <button type="button" class="btn btn-danger" @onclick=@OnDeleting>
+                <i class="fas fa-trash"></i>
+            </button>
+        }
+        else
+        {
+            <Close OnClick="OnClose"></Close>
+        }
+    </td>
+</tr>
+
+
+@code {
+    private string userId;
+    private bool isDeleting;
+    private bool isEdit;
+    private string fileName;
+    [Parameter]
+    public UploadedFileRestModel File { get; set; }
+    [Parameter]
+    public EventCallback<UploadedFileRestModel> OnEdit { get; set; }
+    [Parameter]
+    public EventCallback<UploadedFileRestModel> OnDelete { get; set; }
+
+    private async Task OnDeleting()
+    {
+        isDeleting = true;
+        await OnDelete.InvokeAsync(File);
+        isDeleting = false;
+    }
+
+    private void OnEditing()
+    {
+        isEdit = true;
+        fileName = File.Name;
+    }
+
+    private void OnClose()
+    {
+        isEdit = false;
+        File.Name = fileName;
+    }
+
+    private async Task OnValidEditing()
+    {
+        if (!isEdit)
+        {
+            return;
+        }
+        isEdit = false;
+        await OnEdit.InvokeAsync(File);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
+        userId = state.User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+    }
+}

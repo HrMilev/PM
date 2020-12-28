@@ -1,4 +1,5 @@
 ﻿@inject IStringLocalizer<Localization> loc
+@inject IUploadedFileRepository uploadedFileRepository
 
 <div class="card-body">
     <table class="table table-hover">
@@ -17,6 +18,12 @@
                                   OnOpen="OnOpen"
                                   OnEdit="OnEdit"
                                   OnDelete="OnDelete"></FolderContentRow>
+            }
+            @foreach (var file in CurrentFolder.Files)
+            {
+                <UploadedFileRow File="file"
+                                 OnDelete="OnFileDelete"
+                                 OnEdit="OnFileEdit"></UploadedFileRow>
             }
         </tbody>
         <tfoot>
@@ -75,6 +82,23 @@
     private void OnAddingFolder()
     {
         isAddingFolder = true;
+    }
+
+    private async Task OnFileDelete(UploadedFileRestModel file)
+    {
+
+    }
+
+    private async Task OnFileEdit(UploadedFileRestModel file)
+    {
+        var updatedFile = await uploadedFileRepository.UpdateAsync(file);
+        var oldFile = CurrentFolder.Files.FirstOrDefault(x => x.Id == updatedFile.Id);
+        CurrentFolder.Files[CurrentFolder.Files.IndexOf(oldFile)] = updatedFile;
+    }
+
+    private async Task OnFileDownload(UploadedFileRestModel file)
+    {
+
     }
 
     private async Task OnValidAdding()

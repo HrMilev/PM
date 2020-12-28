@@ -19,6 +19,8 @@ namespace PM.WebAPI.Configurations
             services.AddSingleton<ISupportedCulturesService, SupportedCulturesService>();
             services.AddTransient<IFolderRepository, FolderRepository>();
             services.AddTransient<IFolderService, FolderService>();
+            services.AddTransient<IUploadedFileRepository, UploadedFileRepository>();
+            services.AddTransient<IUploadedFileService, UploadedFileService>();
         }
     }
 }

@@ -45,7 +45,6 @@ namespace PM.WebAPI.Controllers
             return Ok(updatedFolder);
         }
 
-
         [HttpPost]
         public async Task<ActionResult<FolderRestModel>> Post(FolderRestModel folder)
         {

@@ -1,0 +1,10 @@
+﻿<label for="files" class="btn btn-success m-0">
+    <i class="fas fa-file-upload"></i>
+</label>
+<InputFile id="files" style="display:none" OnChange="OnChange" multiple></InputFile>
+
+
+@code {
+    [Parameter]
+    public EventCallback<InputFileChangeEventArgs> OnChange { get; set; }
+}

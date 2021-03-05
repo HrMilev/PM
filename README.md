@@ -1,0 +1,1 @@
+## Blazor learning purpose project

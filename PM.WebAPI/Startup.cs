@@ -14,12 +14,9 @@ using PM.WebAPI.Middlewares;
 using PM.WebAPI.Configurations;
 using AutoMapper;
 using PM.Data;
-using System.Text.Json;
 using PM.WebAPI.Extensions;
 using PM.Data.Entities;
 using System.IdentityModel.Tokens.Jwt;
-using PM.WebAPI.Services;
-using IdentityServer4.Models;
 using System.Linq;
 
 namespace PM.WebAPI
@@ -85,6 +82,16 @@ namespace PM.WebAPI
             });
             services.AddPMServices();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "myApps",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -107,6 +114,7 @@ namespace PM.WebAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("myApps");
 
             app.UseIdentityServer();
             app.UseAuthentication();

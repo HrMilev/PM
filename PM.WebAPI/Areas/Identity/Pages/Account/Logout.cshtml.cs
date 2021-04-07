@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using PM.Data.Entities;
+using PM.Domain;
 
 namespace PM.WebAPI.Areas.Identity.Pages.Account
 {

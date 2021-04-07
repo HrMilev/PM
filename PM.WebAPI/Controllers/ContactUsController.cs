@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PM.Common.Models.Rest;
 using PM.Common.Strings;
-using PM.Data.Entities;
+using PM.Domain;
 using PM.WebAPI.Extensions;
 using PM.WebAPI.Services.Interfaces;
 using System.Collections.Generic;

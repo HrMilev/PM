@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PM.Data.Entities.Bases
+namespace PM.Domain.Base
 {
     public class IdBase<T>
     {

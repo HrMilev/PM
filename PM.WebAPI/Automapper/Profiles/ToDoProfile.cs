@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using PM.Common.Models.Rest;
-using PM.Data.Entities;
+using PM.Domain;
 using System;
 using System.Security.Claims;
 

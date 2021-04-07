@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Moq;
-using PM.Data.Entities;
 using PM.Data.Repositories.Interfaces;
 using PM.WebAPI.Services;
 using PM.WebAPI.Services.Interfaces;
@@ -11,6 +10,7 @@ using Xunit;
 using MockQueryable.Moq;
 using PM.Common.Models.Rest;
 using System;
+using PM.Domain;
 
 namespace PM.WebAPI.Tests.Services
 {

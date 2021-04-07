@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PM.Common.Strings;
-using PM.Data.Entities;
+using PM.Domain;
 
 namespace PM.WebAPI.Extensions
 {

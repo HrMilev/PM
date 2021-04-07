@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PM.Data.Entities;
 using PM.Data.EntityConfigurations.BaseConfigurations;
+using PM.Domain;
 using System;
 
 namespace PM.Data.EntityConfigurations

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using PM.Data.Entities;
+using PM.Domain;
 using PM.Localizations;
 using PM.WebAPI.Models.View;
 

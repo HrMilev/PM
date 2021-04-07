@@ -1,7 +1,7 @@
-﻿using PM.Data.Entities.Bases;
+﻿using PM.Domain.Base;
 using System;
 
-namespace PM.Data.Entities
+namespace PM.Domain
 {
     public class UploadedFile : IdBase<Guid>
     {

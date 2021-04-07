@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PM.Common.Models.Rest;
-using PM.Data.Entities;
+using PM.Domain;
 
 namespace PM.WebAPI.Automapper.Profiles
 {

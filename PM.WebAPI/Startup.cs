@@ -15,9 +15,9 @@ using PM.WebAPI.Configurations;
 using AutoMapper;
 using PM.Data;
 using PM.WebAPI.Extensions;
-using PM.Data.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using PM.Domain;
 
 namespace PM.WebAPI
 {

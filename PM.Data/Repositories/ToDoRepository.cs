@@ -1,7 +1,7 @@
 ﻿using PM.Data;
-using PM.Data.Entities;
 using PM.Data.Repositories.Bases;
 using PM.Data.Repositories.Interfaces;
+using PM.Domain;
 
 namespace PM.Data.Repositories
 {

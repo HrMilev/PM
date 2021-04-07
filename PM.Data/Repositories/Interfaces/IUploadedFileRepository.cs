@@ -1,5 +1,5 @@
-﻿using PM.Data.Entities;
-using PM.Data.Repositories.Bases.Interfaces;
+﻿using PM.Data.Repositories.Bases.Interfaces;
+using PM.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

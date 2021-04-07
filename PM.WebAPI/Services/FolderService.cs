@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PM.Common.Models.Rest;
-using PM.Data.Entities;
 using PM.Data.Repositories.Interfaces;
+using PM.Domain;
 using PM.WebAPI.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;

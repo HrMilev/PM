@@ -12,7 +12,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using PM.Localizations;
 using PM.WebAPI.Models.View;
-using PM.Data.Entities;
+using PM.Domain;
 
 namespace PM.WebAPI.Pages
 {

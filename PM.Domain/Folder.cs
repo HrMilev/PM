@@ -1,7 +1,7 @@
-﻿using PM.Data.Entities.Bases;
+﻿using PM.Domain.Base;
 using System.Collections.Generic;
 
-namespace PM.Data.Entities
+namespace PM.Domain
 {
     public class Folder : IdBase<int>
     {

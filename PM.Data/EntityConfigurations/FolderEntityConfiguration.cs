@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PM.Data.Entities;
 using PM.Data.EntityConfigurations.BaseConfigurations;
+using PM.Domain;
 
 namespace PM.Data.EntityConfigurations
 {

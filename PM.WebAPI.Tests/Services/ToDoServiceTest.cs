@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using Moq;
-using PM.Data.Repositories.Interfaces;
-using PM.WebAPI.Services;
-using PM.WebAPI.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +8,9 @@ using MockQueryable.Moq;
 using PM.Common.Models.Rest;
 using System;
 using PM.Domain;
+using PM.Application.Interfaces.Repositories;
+using PM.Application.Interfaces.Services;
+using PM.Application.Services;
 
 namespace PM.WebAPI.Tests.Services
 {

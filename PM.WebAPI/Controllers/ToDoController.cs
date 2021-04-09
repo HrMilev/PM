@@ -3,9 +3,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PM.Application.Interfaces.Services;
 using PM.Common.Models.Rest;
 using PM.WebAPI.Extensions;
-using PM.WebAPI.Services.Interfaces;
 
 namespace PM.WebAPI.Controllers
 {

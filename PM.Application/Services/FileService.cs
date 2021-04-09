@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using PM.WebAPI.Services.Interfaces;
+using PM.Application.Interfaces.Services;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace PM.WebAPI.Services
+namespace PM.Application.Services
 {
     public class FileService : IFileService
     {

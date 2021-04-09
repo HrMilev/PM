@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PM.Data.Repositories.Bases.Interfaces
+namespace PM.Application.Interfaces.Repositories.Base
 {
     public interface IRepositoryBase<T> where T : class
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PM.Application.Interfaces.Repositories;
 using PM.Data.Repositories.Bases;
-using PM.Data.Repositories.Interfaces;
 using PM.Domain;
 using System;
 using System.Collections.Generic;

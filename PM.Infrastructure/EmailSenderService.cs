@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
-using PM.WebAPI.Services.Interfaces;
+using PM.Application.Interfaces.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace PM.WebAPI.Services
+namespace PM.Infrastructure
 {
     public class EmailSenderService : IEmailSenderService
     {
@@ -24,7 +24,7 @@ namespace PM.WebAPI.Services
             var toAddress = new EmailAddress(to.email, to.name);
             var msg = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, textMessage, textMessage);
             var response = await client.SendEmailAsync(msg);
-            return response.StatusCode == HttpStatusCode.Accepted ? true : false;
+            return response.StatusCode == HttpStatusCode.Accepted;
         }
     }
 }

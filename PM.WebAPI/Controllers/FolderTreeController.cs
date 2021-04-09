@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PM.Application.Interfaces.Services;
 using PM.Common.Models.Rest;
-using PM.WebAPI.Services;
 
 namespace PM.WebAPI.Controllers
 {

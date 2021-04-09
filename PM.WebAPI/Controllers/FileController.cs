@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using PM.Common.Models.Rest;
 using System.Collections.Generic;
 using System.Security.Claims;
-using PM.WebAPI.Services.Interfaces;
+using PM.Application.Interfaces.Services;
 
 namespace PM.WebAPI.Controllers
 {

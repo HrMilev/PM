@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PM.WebAPI.Services.Interfaces
+namespace PM.Application.Interfaces.Services
 {
     public interface IFileService
     {

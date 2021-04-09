@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PM.Application.Interfaces.Repositories;
+using PM.Application.Interfaces.Services;
 using PM.Common.Models.Rest;
-using PM.Data.Repositories.Interfaces;
 using PM.Domain;
-using PM.WebAPI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PM.WebAPI.Services
+namespace PM.Application.Services
 {
     public class ToDoService : IToDoService
     {

@@ -18,6 +18,9 @@ using PM.WebAPI.Extensions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using PM.Domain;
+using PM.Data.ServiceCollectionExtension;
+using PM.Application.ServiceCollectionExtension;
+using PM.Infrastructure.ServiceCollectionExtension;
 
 namespace PM.WebAPI
 {
@@ -80,7 +83,10 @@ namespace PM.WebAPI
             {
                 opts.ResourcesPath = "Resources";
             });
+            services.AddPMData();
             services.AddPMServices();
+            services.AddPMApplication();
+            services.AddPMInfrastructure();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddCors(options =>
             {

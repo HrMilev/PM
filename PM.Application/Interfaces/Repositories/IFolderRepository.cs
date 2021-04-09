@@ -1,8 +1,8 @@
-﻿using PM.Data.Repositories.Bases.Interfaces;
+﻿using PM.Application.Interfaces.Repositories.Base;
 using PM.Domain;
 using System.Threading.Tasks;
 
-namespace PM.Data.Repositories.Interfaces
+namespace PM.Application.Interfaces.Repositories
 {
     public interface IFolderRepository : IRepositoryBase<Folder>
     {

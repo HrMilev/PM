@@ -18,13 +18,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
-    <PackageReference Include="SendGrid" Version="9.21.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PM.Application\PM.Application.csproj" />
     <ProjectReference Include="..\PM.Components\PM.Components.csproj" />
     <ProjectReference Include="..\PM.Core\PM.Common.csproj" />
     <ProjectReference Include="..\PM.Data\PM.Data.csproj" />
+    <ProjectReference Include="..\PM.Infrastructure\PM.Infrastructure.csproj" />
     <ProjectReference Include="..\PM.Localizations\PM.Localizations.csproj" />
     <ProjectReference Include="..\PM.WebApp\PM.WebApp.csproj" />
   </ItemGroup>

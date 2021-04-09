@@ -1,7 +1,7 @@
 ﻿using PM.Common.Models.Rest;
 using System.Threading.Tasks;
 
-namespace PM.WebAPI.Services
+namespace PM.Application.Interfaces.Services
 {
     public interface IFolderService
     {

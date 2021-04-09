@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using PM.WebAPI.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
 

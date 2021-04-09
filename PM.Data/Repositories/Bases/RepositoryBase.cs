@@ -1,4 +1,4 @@
-﻿using PM.Data.Repositories.Bases.Interfaces;
+﻿using PM.Application.Interfaces.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

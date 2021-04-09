@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PM.Application.Interfaces.Services;
 using PM.Common.Models.Rest;
 using PM.Common.Strings;
 using PM.Domain;
 using PM.WebAPI.Extensions;
-using PM.WebAPI.Services.Interfaces;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;

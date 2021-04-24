@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PM.Application.Interfaces.Repositories;
 using PM.Application.Interfaces.Services;
-using PM.Common.Models.Rest;
 using PM.Domain;
 using System;
 using System.Collections.Generic;
@@ -16,46 +14,41 @@ namespace PM.Application.Services
     {
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IFolderRepository _folderRepository;
-        private readonly IMapper _mapper;
         private readonly IFileService _fileService;
 
         public UploadedFileService(
             IUploadedFileRepository uploadedFileRepository,
             IFolderRepository folderRepository,
-            IMapper mapper,
             IFileService fileService)
         {
             _uploadedFileRepository = uploadedFileRepository;
             _folderRepository = folderRepository;
-            _mapper = mapper;
             _fileService = fileService;
         }
 
-        public async Task<UploadedFileRestModel> DownloadAsync(string userId, string id)
+        public async Task<(UploadedFile File, byte[] Content)> DownloadAsync(string userId, string id)
         {
             var file = await _uploadedFileRepository.GetAsync(Guid.Parse(id));
             if (file == null)
             {
-                return null;
+                return (null, null);
             }
 
             var path = _fileService.GetUserFilePathIfExists(userId, id);
 
             if (path == null)
             {
-                return null;
+                return (null, null);
             }
 
-            var restFile = _mapper.Map<UploadedFileRestModel>(file);
-            restFile.Content = await File.ReadAllBytesAsync(path);
-            return restFile;
+            return (file, await File.ReadAllBytesAsync(path));
         }
 
-        public async Task<UploadedFileRestModel> UpdateAsync(string userId, UploadedFileRestModel file)
+        public async Task<UploadedFile> UpdateAsync(string userId, UploadedFile file)
         {
             var oldFile = await _uploadedFileRepository.GetQueryable()
                 .Include(x => x.Folder)
-                .Where(x => x.Id.ToString() == file.Id)
+                .Where(x => x.Id == file.Id)
                 .FirstOrDefaultAsync();
 
             if (oldFile == null || oldFile.Folder.CreatorId != userId)
@@ -63,11 +56,10 @@ namespace PM.Application.Services
                 return null;
             }
 
-            var newFile = _mapper.Map(file, oldFile);
-            return _mapper.Map<UploadedFileRestModel>(await _uploadedFileRepository.UpdateAsync(newFile));
+            return await _uploadedFileRepository.UpdateAsync(file);
         }
 
-        public async Task<IList<UploadedFileRestModel>> SaveFilesToFolder(string userId, int folderId, IList<UploadedFileRestModel> restFiles)
+        public async Task<IList<UploadedFile>> SaveFilesToFolder(string userId, int folderId, IList<(UploadedFile File, byte[] Content)> restFiles)
         {
             var folder = _folderRepository.GetList(x => x.Id == folderId);
             if (folder.Count() != 1 || folder.First().CreatorId != userId)
@@ -77,17 +69,16 @@ namespace PM.Application.Services
             var filesToSave = new List<UploadedFile>();
             foreach (var restFile in restFiles)
             {
-                var file = _mapper.Map<UploadedFile>(restFile);
-                file.Id = Guid.NewGuid();
-                file.FolderId = folderId;
+                restFile.File.Id = Guid.NewGuid();
+                restFile.File.FolderId = folderId;
 
-                await _fileService.WriteUserFileToFileSystem(userId, file.Id.ToString(), restFile.Content);
+                await _fileService.WriteUserFileToFileSystem(userId, restFile.File.Id.ToString(), restFile.Content);
 
-                filesToSave.Add(file);
+                filesToSave.Add(restFile.File);
             }
 
             var savedFiles = await _uploadedFileRepository.SaveListAsync(filesToSave);
-            return _mapper.Map<IList<UploadedFileRestModel>>(savedFiles);
+            return savedFiles;
         }
 
         public async Task<bool> DeleteAsync(string userId, string id)

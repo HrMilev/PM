@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PM.Application.Interfaces.Services;
@@ -19,12 +20,15 @@ namespace PM.WebAPI.Controllers
     {
         private readonly IUserQuestionService _userQuestionService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
         public ContactUsController(IUserQuestionService userQuestionService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             _userQuestionService = userQuestionService;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         [Authorize(Roles = UserRole.Admin)]
@@ -32,7 +36,7 @@ namespace PM.WebAPI.Controllers
         {
             var pageSize = await Request.GetPageSizePagination(Response, () => _userQuestionService.CountAsync());
             var contactUsForms = await _userQuestionService.GetPageAsync(page, pageSize);
-            return Ok(contactUsForms);
+            return Ok(_mapper.Map<IList<UserQuestionRestModel>>(contactUsForms));
         }
 
         [HttpPost]
@@ -41,7 +45,7 @@ namespace PM.WebAPI.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(userId);
             var userEmail = user.Email;
-            var userQuestion = await _userQuestionService.CreateAsync(contactUsFormRestModel, userId, userEmail);
+            var userQuestion = await _userQuestionService.CreateAsync(_mapper.Map<UserQuestion>(contactUsFormRestModel), userId, userEmail);
             if (userQuestion == null)
             {
                 return BadRequest();
@@ -68,13 +72,13 @@ namespace PM.WebAPI.Controllers
             }
 
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userQuestion = await _userQuestionService.UpdateAsync(userQuestionRestModel, userId);
+            var userQuestion = await _userQuestionService.UpdateAsync(_mapper.Map<UserQuestion>(userQuestionRestModel), userId);
             if (userQuestion == null)
             {
                 return NotFound();
             }
 
-            return Ok(userQuestion);
+            return Ok(_mapper.Map<UserQuestionRestModel>(userQuestion));
         }
     }
 }

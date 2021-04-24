@@ -1,13 +1,13 @@
-﻿using PM.Common.Models.Rest;
+﻿using PM.Domain;
 using System.Threading.Tasks;
 
 namespace PM.Application.Interfaces.Services
 {
     public interface IFolderService
     {
-        Task<FolderRestModel> CreateFolderAsync(string userId, FolderRestModel folderRest);
+        Task<Folder> CreateFolderAsync(string userId, Folder folderRest);
         Task DeleteAsync(int id, string userId);
-        Task<FolderRestModel> GetTreeAsync(string userId);
-        Task<FolderRestModel> UpdateAsync(string userId, FolderRestModel folder);
+        Task<Folder> GetTreeAsync(string userId);
+        Task<Folder> UpdateAsync(string userId, Folder folder);
     }
 }

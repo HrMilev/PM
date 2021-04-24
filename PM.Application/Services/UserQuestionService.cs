@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PM.Application.Interfaces.Repositories;
 using PM.Application.Interfaces.Services;
-using PM.Common.Models.Rest;
 using PM.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,17 +12,15 @@ namespace PM.Application.Services
 {
     public class UserQuestionService : IUserQuestionService
     {
-        private readonly IMapper _mapper;
         private readonly IUserQuestionRepository _userQuestionRepository;
         private readonly IEmailSenderService _emailSenderService;
         private readonly IConfiguration _configuration;
 
-        public UserQuestionService(IMapper mapper,
+        public UserQuestionService(
             IUserQuestionRepository userQuestionRepository,
             IEmailSenderService emailSenderService,
             IConfiguration configuration)
         {
-            _mapper = mapper;
             _userQuestionRepository = userQuestionRepository;
             _emailSenderService = emailSenderService;
             _configuration = configuration;
@@ -35,7 +31,7 @@ namespace PM.Application.Services
             return await _userQuestionRepository.GetQueryable().Where(x => x.UserResponderId == null).CountAsync();
         }
 
-        public async Task<UserQuestionRestModel> CreateAsync(UserQuestionRestModel userQuestionRestModel, string creatorId, string creatorEmail)
+        public async Task<UserQuestion> CreateAsync(UserQuestion userQuestionRestModel, string creatorId, string creatorEmail)
         {
             var isSent = await _emailSenderService.SendSuccessfulAsync((_configuration["SendGrid:FromEmail"], _configuration["SendGrid:FromName"]),
                 (_configuration["SendGrid:ToEmail"], _configuration["SendGrid:ToName"]),
@@ -46,14 +42,12 @@ namespace PM.Application.Services
                 return null;
             }
 
-            var userQuestion = _mapper.Map<UserQuestion>(userQuestionRestModel);
-            userQuestion.UserCreatorId = creatorId;
-            userQuestion.CreateDate = DateTime.UtcNow;
-            userQuestion = await _userQuestionRepository.SaveAsync(userQuestion);
-            return _mapper.Map<UserQuestionRestModel>(userQuestion);
+            userQuestionRestModel.UserCreatorId = creatorId;
+            userQuestionRestModel.CreateDate = DateTime.UtcNow;
+            return await _userQuestionRepository.SaveAsync(userQuestionRestModel);
         }
 
-        public async Task<IList<UserQuestionRestModel>> GetPageAsync(int page, int pageSize)
+        public async Task<IList<UserQuestion>> GetPageAsync(int page, int pageSize)
         {
             var userQuestions = await _userQuestionRepository.GetQueryable()
                 .Where(x => x.UserResponderId == null)
@@ -61,7 +55,7 @@ namespace PM.Application.Services
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
                 .ToListAsync();
-            return _mapper.Map<IList<UserQuestionRestModel>>(userQuestions);
+            return userQuestions;
         }
 
         public async Task DeleteAsync(int id)
@@ -69,7 +63,7 @@ namespace PM.Application.Services
             await _userQuestionRepository.DeleteAsync(x => x.Id == id);
         }
 
-        public async Task<UserQuestionRestModel> UpdateAsync(UserQuestionRestModel userQuestionRestModel, string replierId)
+        public async Task<UserQuestion> UpdateAsync(UserQuestion userQuestionRestModel, string replierId)
         {
             var oldUserQuestions = await _userQuestionRepository.GetAsync(userQuestionRestModel.Id);
             if (oldUserQuestions == null)
@@ -86,10 +80,8 @@ namespace PM.Application.Services
                 return null;
             }
 
-            var userQuestion = _mapper.Map(userQuestionRestModel, oldUserQuestions);
-            userQuestion.UserResponderId = replierId;
-            await _userQuestionRepository.UpdateAsync(userQuestion);
-            return _mapper.Map<UserQuestionRestModel>(userQuestion);
+            userQuestionRestModel.UserResponderId = replierId;
+            return await _userQuestionRepository.UpdateAsync(userQuestionRestModel);
         }
     }
 }

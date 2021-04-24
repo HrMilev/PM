@@ -15,9 +15,10 @@ namespace PM.WebAPI.Extensions
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var context = serviceScope.ServiceProvider.GetRequiredService<T>();
             context.Database.Migrate();
+            SeedAdmin(app);
         }
 
-        public static void SeedAdmin(this IApplicationBuilder app)
+        private static void SeedAdmin(IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

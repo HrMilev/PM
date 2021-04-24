@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PM.Application.Interfaces.Repositories;
 using PM.Application.Interfaces.Services;
-using PM.Common.Models.Rest;
 using PM.Domain;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +12,19 @@ namespace PM.Application.Services
     public class FolderService : IFolderService
     {
         private readonly IFolderRepository _folderRepository;
-        private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUploadedFileService _uploadedFileService;
 
         public FolderService(IFolderRepository folderRepository,
-            IMapper mapper,
             UserManager<ApplicationUser> userManager,
             IUploadedFileService uploadedFileService)
         {
             _folderRepository = folderRepository;
-            _mapper = mapper;
             _userManager = userManager;
             _uploadedFileService = uploadedFileService;
         }
 
-        public async Task<FolderRestModel> GetTreeAsync(string userId)
+        public async Task<Folder> GetTreeAsync(string userId)
         {
             var folders = _folderRepository.GetQueryable()
                 .Include(x => x.ChildFolders)
@@ -39,10 +34,10 @@ namespace PM.Application.Services
 
             var rootFolder = await GetTreeRoot(userId, folders);
 
-            return _mapper.Map<FolderRestModel>(rootFolder);
+            return rootFolder;
         }
 
-        public async Task<FolderRestModel> CreateFolderAsync(string userId, FolderRestModel folderRest)
+        public async Task<Folder> CreateFolderAsync(string userId, Folder folderRest)
         {
             if (folderRest.ParentFolderId == null)
             {
@@ -57,13 +52,11 @@ namespace PM.Application.Services
                 return null;
             }
 
-            var folder = _mapper.Map<Folder>(folderRest);
-            folder.CreatorId = userId;
-            folder = await _folderRepository.SaveAsync(folder);
-            return _mapper.Map<FolderRestModel>(folder);
+            folderRest.CreatorId = userId;
+            return await _folderRepository.SaveAsync(folderRest);
         }
 
-        public async Task<FolderRestModel> UpdateAsync(string userId, FolderRestModel folder)
+        public async Task<Folder> UpdateAsync(string userId, Folder folder)
         {
             var oldFolder = _folderRepository
                 .GetList(x => x.CreatorId == userId && x.Id == folder.Id).FirstOrDefault();
@@ -73,9 +66,7 @@ namespace PM.Application.Services
                 return null;
             }
 
-            return _mapper.Map<FolderRestModel>(
-                await _folderRepository.UpdateAsync(
-                    _mapper.Map(folder, oldFolder)));
+            return await _folderRepository.UpdateAsync(folder);
         }
 
         public async Task DeleteAsync(int id, string userId)

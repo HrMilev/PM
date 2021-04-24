@@ -125,7 +125,6 @@ namespace PM.WebAPI
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.SeedAdmin();
             app.UseGrpcWeb();
 
             app.UseMiddleware<CultureMiddleware>();

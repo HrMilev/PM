@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PM.Application.Interfaces.Repositories;
 using PM.Application.Interfaces.Services;
-using PM.Common.Models.Rest;
 using PM.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,12 +12,10 @@ namespace PM.Application.Services
     public class ToDoService : IToDoService
     {
         private readonly IToDoRepository _toDoRepository;
-        private readonly IMapper _mapper;
 
-        public ToDoService(IToDoRepository toDoRepository, IMapper mapper)
+        public ToDoService(IToDoRepository toDoRepository)
         {
             _toDoRepository = toDoRepository;
-            _mapper = mapper;
         }
 
         public async Task<int> CountAsync(string userId)
@@ -27,26 +23,22 @@ namespace PM.Application.Services
             return await _toDoRepository.GetQueryable().Where(x => x.UserId == userId).CountAsync();
         }
 
-        public async Task<ToDoRestModel> UpdateAsync(ToDoRestModel toDoRestModel, string userId)
+        public async Task<ToDo> UpdateAsync(ToDo toDoRestModel, string userId)
         {
-            var oldTodo = await _toDoRepository.GetAsync(Guid.Parse(toDoRestModel.Id));
+            var oldTodo = await _toDoRepository.GetAsync(toDoRestModel.Id);
             if (oldTodo == null || oldTodo.UserId != userId)
             {
                 return null;
             }
 
-            var todo = _mapper.Map(toDoRestModel, oldTodo);
-            var updatedTodo = await _toDoRepository.UpdateAsync(todo);
-            return _mapper.Map<ToDoRestModel>(updatedTodo);
+            return await _toDoRepository.UpdateAsync(toDoRestModel);
         }
 
-        public async Task<ToDoRestModel> CreateAsync(ToDoRestModel toDoRestModel, string userId)
+        public async Task<ToDo> CreateAsync(ToDo toDoRestModel, string userId)
         {
-            var todo = _mapper.Map<ToDo>(toDoRestModel);
-            todo.UserId = userId;
-            todo.CreateDate = DateTime.UtcNow;
-            todo = await _toDoRepository.SaveAsync(todo);
-            return _mapper.Map<ToDoRestModel>(todo);
+            toDoRestModel.UserId = userId;
+            toDoRestModel.CreateDate = DateTime.UtcNow;
+            return await _toDoRepository.SaveAsync(toDoRestModel);
         }
 
         public async Task<bool> DeleteAsync(string id, string userId)
@@ -54,23 +46,23 @@ namespace PM.Application.Services
             return await _toDoRepository.DeleteAsync(x => x.UserId == userId && x.Id.ToString() == id);
         }
 
-        public IList<ToDoRestModel> GetList(string userId)
+        public IList<ToDo> GetList(string userId)
         {
             var todos = _toDoRepository.GetList(t => t.UserId == userId);
-            return _mapper.Map<IList<ToDoRestModel>>(todos);
+            return todos;
         }
 
-        public async Task<ToDoRestModel> GetAsync(string id, string userId)
+        public async Task<ToDo> GetAsync(string id, string userId)
         {
             var todo = await _toDoRepository.GetAsync(Guid.Parse(id));
             if (todo.UserId != userId)
             {
                 return null;
             }
-            return todo != null ? _mapper.Map<ToDoRestModel>(todo) : null;
+            return todo != null ? todo : null;
         }
 
-        public async Task<IList<ToDoRestModel>> GetPageAsync(string userId, int page, int pageSize)
+        public async Task<IList<ToDo>> GetPageAsync(string userId, int page, int pageSize)
         {
             var todos = await _toDoRepository.GetQueryable()
                 .Where(x => x.UserId == userId)
@@ -78,7 +70,7 @@ namespace PM.Application.Services
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
                 .ToListAsync();
-            return _mapper.Map<IList<ToDoRestModel>>(todos);
+            return todos;
         }
     }
 }

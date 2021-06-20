@@ -14,13 +14,13 @@ using PM.WebAPI.Middlewares;
 using PM.WebAPI.Configurations;
 using AutoMapper;
 using PM.Data;
-using PM.WebAPI.Extensions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using PM.Domain;
 using PM.Data.ServiceCollectionExtension;
 using PM.Application.ServiceCollectionExtension;
 using PM.Infrastructure.ServiceCollectionExtension;
+using PM.Data.ApplicationBuilderExtension;
 
 namespace PM.WebAPI
 {
@@ -36,9 +36,9 @@ namespace PM.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("PM.WebAPI")));
+                options.UseSqlite(
+                    Configuration.GetConnectionString("SqliteConnection"),
+                    b => b.MigrationsAssembly("PM.Data")));
 
             services.AddAutoMapper(typeof(Startup));
 

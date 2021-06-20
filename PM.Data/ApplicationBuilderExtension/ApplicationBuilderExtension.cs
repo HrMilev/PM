@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PM.Common.Strings;
 using PM.Domain;
 
-namespace PM.WebAPI.Extensions
+namespace PM.Data.ApplicationBuilderExtension
 {
     public static class ApplicationBuilderExtension
     {
@@ -24,7 +24,7 @@ namespace PM.WebAPI.Extensions
             var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             if (!roleManager.RoleExistsAsync(UserRole.Admin).Result)
             {
-                IdentityRole role = new IdentityRole();
+                var role = new IdentityRole();
                 role.Name = UserRole.Admin;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }

@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  webapp:
+    build:
+      context: .
+    volumes:
+      - "C:/db:/db"
+    env_file:
+     - .env
+    ports:
+      - "5001:5001"
+      - "5000:5000"

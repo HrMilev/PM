@@ -21,6 +21,7 @@ using PM.Data.ServiceCollectionExtension;
 using PM.Application.ServiceCollectionExtension;
 using PM.Infrastructure.ServiceCollectionExtension;
 using PM.Data.ApplicationBuilderExtension;
+using Microsoft.AspNetCore.Http;
 
 namespace PM.WebAPI
 {
@@ -115,7 +116,8 @@ namespace PM.WebAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 

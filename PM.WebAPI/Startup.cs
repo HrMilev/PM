@@ -22,6 +22,7 @@ using PM.Application.ServiceCollectionExtension;
 using PM.Infrastructure.ServiceCollectionExtension;
 using PM.Data.ApplicationBuilderExtension;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.Sqlite;
 
 namespace PM.WebAPI
 {
@@ -36,9 +37,11 @@ namespace PM.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = new SqliteConnection(Configuration.GetConnectionString("SqliteConnection"));
+            connection.Open();
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("SqliteConnection"),
+                options.UseSqlite(connection,
                     b => b.MigrationsAssembly("PM.Data")));
 
             services.AddAutoMapper(typeof(Startup));

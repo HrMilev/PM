@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-EXPOSE 5000
-EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
@@ -40,6 +38,7 @@ ARG ARG_PM_SendGrid__FromEmail
 ARG ARG_PM_SendGrid__FromName
 ARG ARG_PM_SendGrid__ToEmail
 ARG ARG_PM_SendGrid__ToName
+ARG ARG_PORT
 
 ENV ASPNETCORE_ENVIRONMENT=${ARG_ASPNETCORE_ENVIRONMENT}
 ENV ASPNETCORE_URLS=${ARG_ASPNETCORE_URLS}
@@ -54,5 +53,8 @@ ENV PM_SendGrid__FromEmail=${ARG_PM_SendGrid__FromEmail}
 ENV PM_SendGrid__FromName=${ARG_PM_SendGrid__FromName}
 ENV PM_SendGrid__ToEmail=${ARG_PM_SendGrid__ToEmail}
 ENV PM_SendGrid__ToName=${ARG_PM_SendGrid__ToName}
+ENV PORT=${ARG_PORT}
+
+EXPOSE ${PORT}
 
 ENTRYPOINT ["dotnet", "PM.WebAPI.dll"]

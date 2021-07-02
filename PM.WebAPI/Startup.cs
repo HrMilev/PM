@@ -23,6 +23,7 @@ using PM.Infrastructure.ServiceCollectionExtension;
 using PM.Data.ApplicationBuilderExtension;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
+using System.Text.Json.Serialization;
 
 namespace PM.WebAPI
 {

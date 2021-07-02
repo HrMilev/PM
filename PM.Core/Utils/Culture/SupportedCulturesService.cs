@@ -5,7 +5,7 @@ namespace PM.Common.Utils.Culture
 {
     public class SupportedCulturesService : ISupportedCulturesService
     {
-        public IList<string> Cultures { get; } = new List<string>
+        public IList<string> Names { get; } = new List<string>
             {
                 "en-US",
                 "bg-BG",

@@ -2,9 +2,6 @@
 @inject IConfiguration Configuration
 @inject ISupportedCulturesService supportedCultureSelector
 
-@{
-    var cultures = new SupportedCulturesService().Cultures;
-}
 <!DOCTYPE html>
 <html>
 
@@ -22,7 +19,7 @@
     <div class="main">
         <div class="content">
             <div class="d-flex justify-content-end">
-                <component type="typeof(CultureSelector)" param-AvailableCultures="@(cultures)" render-mode="ServerPrerendered" />
+                <component type="typeof(CultureSelector)" param-AvailableCultures="@(supportedCultureSelector.Names)" render-mode="ServerPrerendered" />
             </div>
             @RenderBody()
             @RenderSection("scripts", required: false)

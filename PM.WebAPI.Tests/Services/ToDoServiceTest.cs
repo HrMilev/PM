@@ -79,12 +79,12 @@ namespace PM.WebAPI.Tests.Services
             var todo = new ToDo { Id = guidId };
             var toDo = new ToDo { Id = guidId, UserId = userId };
             _toDoRepositoryMock.Setup(x => x.GetAsync(guidId)).Returns(Task.FromResult(toDo));
-            _toDoRepositoryMock.Setup(x => x.UpdateAsync(toDo)).Returns(Task.FromResult(toDo));
+            _toDoRepositoryMock.Setup(x => x.UpdateAsync(todo)).Returns(Task.FromResult(toDo));
 
             var result = await _toDoService.UpdateAsync(todo, userId);
 
             _toDoRepositoryMock.Verify(x => x.GetAsync(guidId), Times.Once);
-            _toDoRepositoryMock.Verify(x => x.UpdateAsync(toDo), Times.Once);
+            _toDoRepositoryMock.Verify(x => x.UpdateAsync(todo), Times.Once);
             Assert.NotNull(result);
         }
     }

@@ -23,8 +23,6 @@ using PM.Infrastructure.ServiceCollectionExtension;
 using PM.Data.ApplicationBuilderExtension;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
-using System.Text.Json.Serialization;
-using IdentityServer4.Extensions;
 
 namespace PM.WebAPI
 {
@@ -118,7 +116,7 @@ namespace PM.WebAPI
             else
             {
                 app.UseExceptionHandler("/Error");
-                //app.UseHsts();
+                app.UseHsts();
                 app.Use(async (ctx, next) =>
                 {
                     ctx.Request.Scheme = "https";
@@ -126,7 +124,7 @@ namespace PM.WebAPI
                 });
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

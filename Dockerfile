@@ -25,20 +25,20 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 VOLUME /db
 
-ARG ARG_ASPNETCORE_ENVIRONMENT
+ARG ARG_ASPNETCORE_ENVIRONMENT="Development"
 ARG ARG_ASPNETCORE_URLS
-ARG ARG_PM_ApplicationUsers__Admin__Email
-ARG ARG_PM_ApplicationUsers__Admin__Password
-ARG ARG_PM_ApplicationUsers__Admin__UserName
-ARG ARG_PM_ConnectionStrings__SqliteConnection
-ARG ARG_PM_GoogleReCaptcha__SecretKey
-ARG ARG_PM_GoogleReCaptcha__SiteKey
+ARG ARG_PM_ApplicationUsers__Admin__Email="i4koo@abv.bg"
+ARG ARG_PM_ApplicationUsers__Admin__Password="!Admin1"
+ARG ARG_PM_ApplicationUsers__Admin__UserName="admin"
+ARG ARG_PM_ConnectionStrings__SqliteConnection="Data Source=:memory:;"
+ARG ARG_PM_GoogleReCaptcha__SecretKey="6LeMp9MZAAAAAL5SBdvSkmrwIdRp9ioZs476ICEM"
+ARG ARG_PM_GoogleReCaptcha__SiteKey="6LeMp9MZAAAAAKt5DdbOxSTDvfhrP-YzqFfjMqlX"
 ARG ARG_PM_SendGrid__APIKey
 ARG ARG_PM_SendGrid__FromEmail
 ARG ARG_PM_SendGrid__FromName
 ARG ARG_PM_SendGrid__ToEmail
 ARG ARG_PM_SendGrid__ToName
-ARG ARG_PORT
+ARG ARG_PORT="80"
 
 ENV ASPNETCORE_ENVIRONMENT=${ARG_ASPNETCORE_ENVIRONMENT}
 ENV ASPNETCORE_URLS=${ARG_ASPNETCORE_URLS}

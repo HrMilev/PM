@@ -24,6 +24,7 @@ using PM.Data.ApplicationBuilderExtension;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using System.Text.Json.Serialization;
+using IdentityServer4.Extensions;
 
 namespace PM.WebAPI
 {
@@ -118,6 +119,11 @@ namespace PM.WebAPI
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+                app.Use(async (ctx, next) =>
+                {
+                    ctx.Request.Scheme = "https";
+                    await next();
+                });
             }
 
             //app.UseHttpsRedirection();

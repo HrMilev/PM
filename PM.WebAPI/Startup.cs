@@ -23,6 +23,7 @@ using PM.Infrastructure.ServiceCollectionExtension;
 using PM.Data.ApplicationBuilderExtension;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
+using IdentityServer4.Extensions;
 
 namespace PM.WebAPI
 {
@@ -119,7 +120,7 @@ namespace PM.WebAPI
                 app.UseHsts();
                 app.Use(async (ctx, next) =>
                 {
-                    ctx.Request.Scheme = "https";
+                    ctx.SetIdentityServerOrigin("https://blazorpm.azurewebsites.net");
                     await next();
                 });
             }

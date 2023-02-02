@@ -1,4 +1,4 @@
 ## Blazor learning purpose project
 
 
-http://blazorpm.herokuapp.com/
+https://blazorpm.azurewebsites.net

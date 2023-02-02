@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://ghcr.io/hrmilev/
-        username: ${{ secrets.AzureAppService_ContainerUsername_b28873f5090d4f9e983901c37b722615 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_92d92b8aa22e4eda8607b59872c36a26 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_b86fffff45fb4797b20007119f490ba2 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_ff0d261a81af4c499341d2269a8b010d }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/hrmilev/${{ secrets.AzureAppService_ContainerUsername_b28873f5090d4f9e983901c37b722615 }}/hrmilev/pm:${{ github.sha }}
+        tags: ghcr.io/hrmilev/${{ secrets.AzureAppService_ContainerUsername_b86fffff45fb4797b20007119f490ba2 }}/hrmilev/pm:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'blazorpm'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_c0e06632852b47558dc4aced878e8a85 }}
-        images: 'ghcr.io/hrmilev/${{ secrets.AzureAppService_ContainerUsername_b28873f5090d4f9e983901c37b722615 }}/hrmilev/pm:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1c10750bdafe4984906a98df30f4e1cf }}
+        images: 'ghcr.io/hrmilev/${{ secrets.AzureAppService_ContainerUsername_b86fffff45fb4797b20007119f490ba2 }}/hrmilev/pm:${{ github.sha }}'

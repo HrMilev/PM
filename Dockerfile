@@ -25,7 +25,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 VOLUME /db
 
-ARG ARG_ASPNETCORE_ENVIRONMENT="Development"
+ARG ARG_ASPNETCORE_ENVIRONMENT="Production"
 ARG ARG_ASPNETCORE_URLS
 ARG ARG_PM_ApplicationUsers__Admin__Email="i4koo@abv.bg"
 ARG ARG_PM_ApplicationUsers__Admin__Password="!Admin1"

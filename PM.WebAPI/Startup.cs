@@ -118,11 +118,11 @@ namespace PM.WebAPI
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
-                app.Use(async (ctx, next) =>
-                {
-                    ctx.SetIdentityServerOrigin("https://blazorpm.azurewebsites.net");
-                    await next();
-                });
+                //app.Use(async (ctx, next) =>
+                //{
+                //    ctx.SetIdentityServerOrigin("https://blazorpm.azurewebsites.net");
+                //    await next();
+                //});
             }
 
             app.UseHttpsRedirection();

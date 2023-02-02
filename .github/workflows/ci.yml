@@ -5,7 +5,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  
+  workflow_dispatch:
+    inputs:
+      deploy: false
 jobs:
   build:
 
@@ -25,7 +27,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
   push-container:
-    if: false
+    if: ${{ inputs.deploy }}
     needs: build
     runs-on: ubuntu-latest
     environment: blazorpm

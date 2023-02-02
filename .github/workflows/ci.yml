@@ -7,7 +7,10 @@ on:
     branches: [ master ]
   workflow_dispatch:
     inputs:
-      deploy: false
+      deploy:
+        description: 'Should deploy?'
+        type: string
+        required: false
 jobs:
   build:
 
@@ -27,7 +30,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
   push-container:
-    if: ${{ inputs.deploy }}
+    if: ${{ github.event.inputs.deploy != '' }}
     needs: build
     runs-on: ubuntu-latest
     environment: blazorpm

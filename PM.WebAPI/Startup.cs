@@ -118,7 +118,7 @@ namespace PM.WebAPI
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                //app.UseHsts();
                 app.Use(async (ctx, next) =>
                 {
                     ctx.Request.Scheme = "https";
